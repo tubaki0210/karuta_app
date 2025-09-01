@@ -1,0 +1,72 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn-Up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* アニメーションを適用するクラス */
+.fade-in-container {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.fade-in-up {
+  animation: fadeIn-Up 0.6s ease-out forwards;
+}
+
+/* 札が苦手札から解除されたときに適用するクラス */
+.card-weak-removed-animation {
+  animation: card-burst-animation 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+    forwards;
+}
+
+@keyframes card-burst-animation {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4); /* 最後に少し縮小して透明に */
+    opacity: 0;
+  }
+}
+
+/* 札の周りに飛び散る小さな破片（疑似要素で実装） */
+.card-burst-animation::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background-color: #ffd700; /* 金色 */
+  border-radius: 50%;
+  animation: sparkles-animation 0.6s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes sparkles-animation {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(50); /* 四方に広がる */
+    opacity: 0;
+  }
+}

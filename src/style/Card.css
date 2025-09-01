@@ -1,0 +1,15 @@
+.tanka {
+  writing-mode: vertical-rl;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border: 6px solid green;
+  /* 短歌の間に余白を追加 */
+  /* margin-right: 20px; */
+  /* padding: 8px; */
+  padding: 10px;
+  /* min-width: 120px; */
+  /* min-height: 170px; */
+  font-weight: bold;
+}
