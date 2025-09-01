@@ -1,90 +1,97 @@
 "use client";
+
 import { useAuth } from "@/context/AuthContext";
-// import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
+import { InputField } from "@/components/ui/InputField"; // 作成したコンポーネントをインポート
 
-const Loginpage = () => {
+const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [is_Login, setLogin] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // 状態名をより分かりやすく変更
   const [error, setError] = useState("");
   const router = useRouter();
   const { login } = useAuth();
+
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
-    setLogin(true);
-    const res = await login(email, password);
-    if (res.ok) {
-      console.log("ログイン成功");
-      router.push("/");
-    } else {
-      setLogin(false);
-      setError("メールアドレスまたはパスワードが正しくありません");
+    setIsLoading(true);
+    setError(""); // 送信時に以前のエラーをクリア
+
+    try {
+      const res = await login(email, password);
+      if (res.ok) {
+        console.log("ログイン成功");
+        router.push("/");
+      } else {
+        // APIから返されたエラーメッセージをセットすることも可能
+        setError("メールアドレスまたはパスワードが正しくありません");
+      }
+    } catch (err) {
+      console.error("Login failed:", err);
+      setError("ログイン中に予期せぬエラーが発生しました。");
+    } finally {
+      setIsLoading(false); // 成功・失敗に関わらずローディングを終了
     }
   };
+
   return (
     <>
       <div className="flex justify-center items-center min-h-screen">
-        <div className="min-w-130 min-h-100 flex flex-col items-center bg-white border-4 border-green-400  py-6 px-6">
-          <h1 className="text-2xl font-bold mb-7">ログインフォーム</h1>
-          <p className="text-center text-red-500 py-3">{error}</p>
+        <div className="w-full max-w-md flex flex-col items-center bg-white py-8 px-6 shadow-md rounded-lg">
+          <h1 className="text-2xl font-bold mb-6">ログイン</h1>
+
+          {error && <p className="text-center text-red-500 py-3">{error}</p>}
+
           <form
             onSubmit={handleLogin}
-            className="flex flex-col items-center w-full"
+            className="flex flex-col items-center w-full gap-6"
           >
-            <div className="flex flex-col w-full gap-2">
-              <label htmlFor="email" className="font-bold">
-                メールアドレス
-              </label>
-              <input
-                type="email"
-                id="email"
-                value={email}
-                className="border-1 border-gray-200 p-2 bg-gray-100 outline-none"
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            <div className="flex flex-col w-full mt-7 gap-2">
-              <label className="font-bold">パスワード</label>
-              <input
-                type="password"
-                value={password}
-                className="border-1 border-gray-200 p-2 bg-gray-100 outline-none"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
+            <InputField
+              id="email"
+              label="メールアドレス"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <InputField
+              id="password"
+              label="パスワード"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
             <button
               type="submit"
-              className="w-full py-2 bg-green-200 hover:bg-green-500 duration-300 mt-10"
+              disabled={isLoading}
+              className="w-full py-2 bg-green-400 text-white font-bold rounded hover:bg-green-500 duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed mt-4"
             >
-              ログイン
+              {isLoading ? "ログイン中..." : "ログイン"}
             </button>
           </form>
-          {/* 横線を追加できる */}
+
           <div className="w-full border-t border-gray-300 my-5"></div>
+
           <Link
             href="/register"
-            className="bg-green-100 py-3 rounded-2xl  w-full text-center"
+            className="bg-gray-100 py-3 rounded-lg w-full text-center hover:bg-gray-200"
           >
-            新規登録
+            新規登録はこちら
           </Link>
         </div>
       </div>
-      {is_Login && (
-        <div
-          className="
-            fixed inset-0 z-50          
-            bg-white 
-            flex justify-center items-center
-          "
-        >
-          <p className="text-2xl">ログイン中</p>
+
+      {/* 全画面ローディング表示も残す場合 */}
+      {isLoading && (
+        <div className="fixed inset-0 z-50 bg-white/80 backdrop-blur-sm flex justify-center items-center">
+          <p className="text-2xl">ログイン中...</p>
         </div>
       )}
     </>
   );
 };
 
-export default Loginpage;
+export default LoginPage;

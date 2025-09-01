@@ -7,9 +7,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="ja">
       <body>
-        <AuthProvider>{children}</AuthProvider>
+        <div className="bg-green-100">
+          <AuthProvider>{children}</AuthProvider>
+        </div>
       </body>
     </html>
   );

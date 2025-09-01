@@ -1,4 +1,5 @@
 "use client";
+import { InputField } from "@/components/ui/InputField";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 
@@ -34,31 +35,32 @@ const RegisterPage = () => {
   return (
     <>
       <div className="min-h-screen flex justify-center items-center">
-        <div className="flex flex-col items-center min-w-130 min-h-120 bg-white shadow-2xl  py-8 px-7">
+        <div className="flex flex-col items-center w-full max-w-md bg-white shadow-2xl  py-8 px-7">
           <h1 className="text-2xl font-bold mb-7">新規登録フォーム</h1>
           <p className="text-center text-red-500 py-4">{error}</p>
-          <form onSubmit={handleRegister} className="w-full">
-            <div className="w-full flex flex-col gap-2">
-              <label className="font-bold">メールアドレス</label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="p-2 bg-gray-200 outline-none"
-              />
-            </div>
-            <div className="w-full flex flex-col gap-2 mt-6">
-              <label className="font-bold">パスワード</label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="p-2 bg-gray-200 outline-none"
-              />
-            </div>
+          <form
+            onSubmit={handleRegister}
+            className="w-full flex flex-col items-center gap-6"
+          >
+            <InputField
+              id="email"
+              label="メールアドレス"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <InputField
+              id="password"
+              label="パスワード"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
             <button
               type="submit"
-              className="w-full bg-blue-200 font-bold py-3 mt-12"
+              className="w-full py-2 bg-green-400 text-white font-bold rounded hover:bg-green-500 duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed mt-4"
             >
               新規登録
             </button>
