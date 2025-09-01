@@ -87,12 +87,24 @@ erDiagram
 
 ### 新規登録・ログイン
 
+https://github.com/user-attachments/assets/229734f3-0d4a-4d17-9381-7f851bfa6873
+
 ### 百人一首の一覧確認・苦手札の登録
+
+https://github.com/user-attachments/assets/609aa0de-dfb4-47a6-8796-534a72805df0
 
 ### 上の句から下の句を選ぶ 4 択クイズ
 
+https://github.com/user-attachments/assets/000500db-70f1-463d-9770-169c976885ab
+
 ### 下の句から決まり字を答えるクイズ
+
+https://github.com/user-attachments/assets/72b82a13-861f-45e0-8446-22013fc356c7
 
 ### 競技カルタ時の札配置を覚える練習機能
 
+https://github.com/user-attachments/assets/f4b13abd-e3e3-46cb-842e-9397607bcfa1
+
 ### 競技カルタを一人で練習できる機能
+
+https://github.com/user-attachments/assets/033a5e64-aa0e-42c6-ac09-65ae08d5b8c8
