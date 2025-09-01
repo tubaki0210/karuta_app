@@ -4,35 +4,35 @@ import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
-import { InputField } from "@/components/ui/InputField"; // 作成したコンポーネントをインポート
+import { InputField } from "@/components/ui/InputField";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // 状態名をより分かりやすく変更
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const { login } = useAuth();
 
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setError(""); // 送信時に以前のエラーをクリア
-
+    setError("");
     try {
       const res = await login(email, password);
       if (res.ok) {
         console.log("ログイン成功");
         router.push("/");
       } else {
-        // APIから返されたエラーメッセージをセットすることも可能
         setError("メールアドレスまたはパスワードが正しくありません");
       }
     } catch (err) {
       console.error("Login failed:", err);
       setError("ログイン中に予期せぬエラーが発生しました。");
     } finally {
-      setIsLoading(false); // 成功・失敗に関わらずローディングを終了
+      setIsLoading(false);
     }
   };
 
@@ -59,10 +59,18 @@ const LoginPage = () => {
             <InputField
               id="password"
               label="パスワード"
-              type="password"
+              type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              icon={
+                showPassword ? (
+                  <AiFillEyeInvisible size={22} />
+                ) : (
+                  <AiFillEye size={22} />
+                )
+              }
+              onIconClick={() => setShowPassword(!showPassword)}
             />
             <button
               type="submit"
@@ -84,7 +92,6 @@ const LoginPage = () => {
         </div>
       </div>
 
-      {/* 全画面ローディング表示も残す場合 */}
       {isLoading && (
         <div className="fixed inset-0 z-50 bg-white/80 backdrop-blur-sm flex justify-center items-center">
           <p className="text-2xl">ログイン中...</p>

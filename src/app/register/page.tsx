@@ -2,12 +2,15 @@
 import { InputField } from "@/components/ui/InputField";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [is_register, setIsRegister] = useState(false);
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
   const router = useRouter();
   const handleRegister = async (e: FormEvent) => {
     e.preventDefault();
@@ -53,10 +56,18 @@ const RegisterPage = () => {
             <InputField
               id="password"
               label="パスワード"
-              type="password"
+              type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              icon={
+                showPassword ? (
+                  <AiFillEyeInvisible size={22} />
+                ) : (
+                  <AiFillEye size={22} />
+                )
+              }
+              onIconClick={() => setShowPassword(!showPassword)}
             />
             <button
               type="submit"
