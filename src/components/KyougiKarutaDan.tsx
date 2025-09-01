@@ -1,5 +1,4 @@
 import { Card } from "@/type/types";
-import React, { useEffect, useState } from "react";
 import ShimonokuCard from "./ShimonokuCard";
 
 interface KyougiKarutaDanProps {
@@ -28,20 +27,12 @@ const CardRow = ({
   isAnswerable,
 }: //
 CardRowProps) => {
-  const handleAns = (card: Card) => {
-    // 答えてはいけないなら、何もせずにreturn
-    // if (!isAnswerable) {
-    //   return;
-    // }
-
-    handleCheckAnswer(card);
-  };
   return (
     <div className="flex gap-2">
       {cards.map((card: Card) => (
         <div
           key={card.id}
-          onClick={() => handleAns(card)}
+          onClick={() => handleCheckAnswer(card)}
           className={`w-[100px] h-[130px] transform transition ${
             isAnswerable && "hover:scale-105"
           } duration-300 ${isVisible(card.id) ? "opacity-0" : "opacity-100"}`}

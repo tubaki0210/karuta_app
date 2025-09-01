@@ -1,11 +1,11 @@
-import { shuffleArray } from "@/lib/Shuffle";
 import { Card } from "@/type/types";
 import React, { useEffect, useMemo, useState } from "react";
 import Header from "./Header";
 import KyougiKarutaDan from "./KyougiKarutaDan";
 
 interface KyougiKarutaFieldProps {
-  cards: Card[] | undefined;
+  FieldCards: Card[];
+  AudioCards: Card[];
 }
 
 const speak = (text: string) => {
@@ -32,9 +32,10 @@ const speak = (text: string) => {
 
 type NextActionType = "NONE" | "OTETSUKI" | "KARAFUDA";
 
-const KyougiKarutaField = ({ cards }: KyougiKarutaFieldProps) => {
-  const [FieldCards, setFieldCards] = useState<Card[]>([]);
-  const [AudioCards, setAudioCards] = useState<Card[]>();
+const KyougiKarutaField = ({
+  FieldCards,
+  AudioCards,
+}: KyougiKarutaFieldProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnswerable, setIsAnswerable] = useState(false);
   const [nextAction, setNextAction] = useState<NextActionType>("NONE");
@@ -42,17 +43,6 @@ const KyougiKarutaField = ({ cards }: KyougiKarutaFieldProps) => {
     new Set()
   );
   const [isStart, setIsstart] = useState(false);
-
-  useEffect(() => {
-    if (cards) {
-      const shuffledAudioCards = shuffleArray([...cards]);
-      setAudioCards(shuffledAudioCards);
-      // 2. 100首全体を【もう一度別で】シャッフルし、「場に置く40枚」をランダムに選ぶ
-      const shuffledForFieldSelection = shuffleArray([...cards]);
-      const selectedFieldCards = shuffledForFieldSelection.slice(0, 40);
-      setFieldCards(selectedFieldCards);
-    }
-  }, [cards]);
 
   // 場札のIDをSetで保持（空札判定の高速化のため）
   const fieldCardIds = useMemo(

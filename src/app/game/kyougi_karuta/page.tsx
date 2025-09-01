@@ -2,22 +2,32 @@
 
 import Header from "@/components/Header";
 import KyougiKarutaField from "@/components/KyougiKarutaField";
-import useGetCards from "@/hooks/useGetCards";
+import { shuffleArray } from "@/lib/Shuffle";
 import { Card } from "@/type/types";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 // ... (Poem型やデータ取得のロジックは既存のものを使用)
 
 export default function ListeningQuizPage() {
-  // ... (問題、札の表示などのstate)
-  const { cards } = useGetCards();
   const [isStart, setIsstart] = useState(false);
+  const [FieldCards, setFieldCards] = useState<Card[]>([]);
+  const [AudioCards, setAudioCards] = useState<Card[]>([]);
+
   const handleStart = async () => {
+    const res = await fetch(`/api/cards`);
+    const data = await res.json(); // 全てのカードを取得
+    const allCards: Card[] = data.cards;
+    const shuffledAudioCards = shuffleArray([...allCards]);
+    setAudioCards(shuffledAudioCards);
+    const shuffledForFieldSelection = shuffleArray([...allCards]);
+    const selectedFieldCards = shuffledForFieldSelection.slice(0, 40);
+    setFieldCards(selectedFieldCards);
     setIsstart(true);
   };
+
   if (isStart) {
     return (
       <div>
-        <KyougiKarutaField cards={cards} />
+        <KyougiKarutaField FieldCards={FieldCards} AudioCards={AudioCards} />
       </div>
     );
   }

@@ -31,43 +31,10 @@ const FourGamepage = () => {
   const handleStartQuiz = async () => {
     // クイズデータをフェッチ
     const res = await fetch(
-      //   `/api/cards?start_num=${settings.start_num}&end_num=${settings.end_num}`
-      `/api/cards`
+      `/api/quiz?start_num=${settings.start_num}&end_num=${settings.end_num}&format=${settings.format}`
     );
     const data = await res.json(); // 全てのカードを取得
-    const allCards = data.cards;
-    // 正解カード
-    const quizcards = allCards.filter(
-      (card: Card) =>
-        card.id >= settings.start_num && card.id <= settings.end_num
-    );
-    const neqQuizdata: QuizDataProps[] = quizcards.map((quizcard: Card) => {
-      // 不正解の選択肢を３つ生成
-      const incorrectcards: Card[] = [];
-      while (incorrectcards.length < 3) {
-        const randomCard =
-          allCards[Math.floor(Math.random() * allCards.length)];
-        if (
-          randomCard.id !== quizcard.id &&
-          !incorrectcards.some(
-            (incorrectcard: Card) => randomCard.id === incorrectcard.id
-          )
-        ) {
-          incorrectcards.push(randomCard);
-        }
-      }
-      const allOptions = [...incorrectcards, quizcard];
-      allOptions.sort(() => Math.random() - 0.5);
-      return {
-        question: quizcard,
-        // correctAnswer: quizcard.,
-        options: allOptions,
-      };
-    });
-    if (settings.format === "random") {
-      neqQuizdata.sort(() => Math.random() - 0.5);
-    }
-    setQuizData(neqQuizdata);
+    setQuizData(data.quizData);
     setIsStart(true);
   };
 

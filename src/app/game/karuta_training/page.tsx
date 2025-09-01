@@ -2,8 +2,9 @@
 import Header from "@/components/Header";
 import KarutaField from "@/components/KarutaField";
 import QuizForm from "@/components/QuizForm";
+import { shuffleArray } from "@/lib/Shuffle";
 import { Card } from "@/type/types";
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 
 export interface QuizDataProps {
   question: Card;
@@ -17,21 +18,7 @@ const KarutaTrainingpage = () => {
     end_num: 100,
     format: "random",
   });
-
-  // const { cards, isLoading, error } = useGetCards();
   const [cards, setCards] = useState<Card[]>([]);
-
-  const processedCards: Card[] | undefined = useMemo(
-    () =>
-      // cardsが存在する場合のみmapを実行
-      cards?.map((card) => ({
-        ...card,
-        is_visible: true,
-        // 他にも追加したい属性があればここに追加
-      })),
-    [cards]
-  ); // cardsが変更されたときだけ再計算
-
   const handleChangeSettings = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
     const data = { ...settings, [name]: value };
@@ -43,20 +30,18 @@ const KarutaTrainingpage = () => {
 
   const handleStart = async () => {
     // クイズデータをフェッチ
-    const res = await fetch(
-      //   `/api/cards?start_num=${settings.start_num}&end_num=${settings.end_num}`
-      `/api/cards`
-    );
+    const res = await fetch(`/api/cards`);
     const data = await res.json(); // 全てのカードを取得
     const allCards = data.cards;
-    setCards(allCards);
+    const preparedCards: Card[] = shuffleArray(allCards);
+    setCards(preparedCards);
     setIsStart(true);
   };
 
   if (is_start) {
     return (
       <div>
-        <KarutaField cards={processedCards} />
+        <KarutaField cards={cards} />
       </div>
     );
   }

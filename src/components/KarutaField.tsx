@@ -1,7 +1,6 @@
 import { Card } from "@/type/types";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import KarutaDan from "./KarutaDan";
-import { shuffleArray } from "@/lib/Shuffle";
 import AnswerModal from "./AnswerModal";
 import Header from "./Header";
 
@@ -10,16 +9,8 @@ interface KarutaFieldProps {
 }
 
 const KarutaField = ({ cards }: KarutaFieldProps) => {
-  const [FieldCards, setFieldCards] = useState<Card[] | undefined>();
-  useEffect(() => {
-    if (cards) {
-      const newArray = shuffleArray(cards);
-      setFieldCards(newArray);
-    }
-  }, [cards]);
-
-  const myCards = useMemo(() => FieldCards?.slice(0, 25), [FieldCards]);
-  const enemyCards = useMemo(() => FieldCards?.slice(25, 50), [FieldCards]);
+  const myCards = useMemo(() => cards?.slice(0, 25), [cards]);
+  const enemyCards = useMemo(() => cards?.slice(25, 50), [cards]);
   const InputRef = useRef<HTMLInputElement>(null);
   const [isVisible, setIsVisible] = useState(true);
   const [isAnswer, setIsAnswer] = useState(false);

@@ -1,6 +1,5 @@
 "use client";
 import { UserFront } from "@/type/types";
-import { useRouter } from "next/navigation";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 interface AuthContextType {

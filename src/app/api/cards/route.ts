@@ -15,10 +15,6 @@ export const GET = async (req: NextRequest) => {
       params.end_num = Number(end_num);
     }
     const cards = await FetchCard(params);
-    // let query = "SELECT * FROM cards";
-    // const [cards] = await db.query(query);
-    // console.log(cards);
-    // console.log(cards);
     return NextResponse.json({ cards });
   } catch (error) {
     return NextResponse.json({ message: error }, { status: 401 });
