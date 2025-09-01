@@ -87,6 +87,8 @@ erDiagram
 
 ### 新規登録・ログイン
 
+https://github.com/user-attachments/assets/229734f3-0d4a-4d17-9381-7f851bfa6873
+
 ### 百人一首の一覧確認・苦手札の登録
 
 ### 上の句から下の句を選ぶ 4 択クイズ
