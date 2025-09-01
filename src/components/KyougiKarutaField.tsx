@@ -30,7 +30,6 @@ const speak = (text: string) => {
   window.speechSynthesis.speak(utterance);
 };
 
-// 【変更点①】次のアクションの理由を管理する型を定義
 type NextActionType = "NONE" | "OTETSUKI" | "KARAFUDA";
 
 const KyougiKarutaField = ({ cards }: KyougiKarutaFieldProps) => {
