@@ -14,15 +14,6 @@ interface Props {
 }
 
 const QuizForm = ({ settings, setSettings, handleStart, children }: Props) => {
-  // const handleChangeSettings = (e: React.ChangeEvent<HTMLSelectElement>) => {
-  //   const { name, value } = e.target;
-  //   const data = { ...settings, [name]: value };
-  //   if (Number(data.start_num) >= Number(data.end_num)) {
-  //     return;
-  //   }
-  //   setSettings({ ...settings, [name]: value });
-  // };
-
   return (
     <div className="bg-white shadow-2xl p-8 flex flex-col   w-[500px]">
       <QuizRange settings={settings} setSettings={setSettings} />

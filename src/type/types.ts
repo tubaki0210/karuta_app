@@ -9,18 +9,6 @@ export interface Card {
   tomofuda_info: string | null;
 }
 
-// export interface KarutaFieldCard {
-//   id: number;
-//   uta_num: number;
-//   kamino_ku_kana: string;
-//   shimono_ku_kana: string;
-//   kimariji_kana: string;
-//   kimariji_len: number;
-//   group_name: string | null;
-//   tomofuda_info: string | null;
-//   is_visible: boolean;
-// }
-
 export interface User {
   id: number;
   email: string;
