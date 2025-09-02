@@ -45,18 +45,10 @@ const FlashKaminokuCard = ({ card }: FlashKaminokuCardProps) => {
   useEffect(() => {
     // const currentfuda: CardDates = cardsData[currentIndex];
     const playAnimation = async () => {
-      //   setNextFlag(false);
       // typeTextのPromiseが解除されたら次のtypeText
       await typeText(kaminoku, kaminokuRef);
       await typeText(nakanoku, nakanokuRef);
       await typeText(shimonoku, shimonokuRef);
-      //   setTimeout(() => {
-      //     setNextFlag(true);
-      //   }, 400);
-      // setTimeout(() => {
-      //   const nextIndex = (currentIndex + 1) % cardsData.length;
-      //   setCurrentIndex(nextIndex);
-      // }, 2000);
     };
     playAnimation();
     return () => {
