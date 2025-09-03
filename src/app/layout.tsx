@@ -9,7 +9,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body>
-        <div className="bg-green-100">
+        <div className="bg-green-100 px-5">
           <AuthProvider>{children}</AuthProvider>
         </div>
       </body>
