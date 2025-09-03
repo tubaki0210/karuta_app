@@ -60,13 +60,13 @@ const FourQuizView = ({
   };
 
   return (
-    <div className="flex flex-col items-center justify-center mt-5 md:mt-15">
-      <div className="flex flex-col justify-center items-center gap-25">
-        <div className="flex flex-col w-[190px] h-[210px] text-[19px] md:w-[200px] md:h-[240px] md:text-[20px] ">
-          <p className="text-center  py-1 text-green-600 font-bold">上の句</p>
+    <div className="flex flex-col items-center justify-center mt-15">
+      <div className="flex flex-col justify-center items-center gap-10 md:gap-25">
+        <div className="w-[180px] h-[220px] text-[17px] md:w-[200px] md:h-[240px] md:text-[20px] ">
+          {/* <p className="text-center  py-1 text-green-600 font-bold">上の句</p> */}
           <FlashKaminokuCard card={currentQuiz.question} />
         </div>
-        <div className="flex gap-4">
+        <div className="grid grid-cols-2 gap-5 md:flex md:gap-4">
           {currentQuiz.options.map((option) => (
             <div className="relative" key={option.id}>
               <p
