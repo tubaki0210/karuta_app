@@ -57,7 +57,7 @@ const KarutaDan = ({
 
   // 各段の定義
   const tiers = [
-    { left: cards.slice(0, 5), right: cards.slice(5, 11) }, // 下段
+    { left: cards.slice(0, 5), right: cards.slice(5, 10) }, // 下段
     { left: cards.slice(11, 15), right: cards.slice(15, 20) }, // 中段
     { left: cards.slice(20, 23), right: cards.slice(23, 25) }, // 上段
   ];

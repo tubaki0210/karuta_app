@@ -58,7 +58,7 @@ const KyougiKarutaDan = ({
 }: //
 KyougiKarutaDanProps) => {
   const tiers = [
-    { left: cards.slice(0, 5), right: cards.slice(5, 11) },
+    { left: cards.slice(0, 5), right: cards.slice(5, 10) },
     { left: cards.slice(11, 15), right: cards.slice(15, 20) },
   ];
 
