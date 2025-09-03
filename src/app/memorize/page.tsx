@@ -9,15 +9,15 @@ import { getSession } from "@/lib/session"; // 作成した関数をインポー
 
 const MemorizePage = async () => {
   // サーバーサイドでセッション情報を取得
-  const session = await getSession();
+  const user = await getSession();
 
   // セッションが存在する場合
-  if (session && session.user) {
+  if (user && user.id) {
     // userオブジェクトからidを取り出す
-    const userId = session.user.id;
+    const userId = user.id;
 
     // userオブジェクトからemailを取り出す
-    const userEmail = session.user.email;
+    const userEmail = user.email;
 
     // 以下、ユーザーIDに基づいてデータをフェッチする処理
     const allCardsData = FetchCardSupa({});

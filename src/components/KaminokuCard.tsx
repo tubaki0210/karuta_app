@@ -43,7 +43,7 @@ const KaminokuCard = ({ card, isKimariji }: Props) => {
   };
 
   return (
-    <div style={CardStyle} className="min-w-full min-h-full">
+    <div style={CardStyle} className="min-w-full min-h-full relative">
       <div
         style={KimarijiStyle}
         className={`${isKimariji ? "opacity-80" : "opacity-0"} duration-300`}

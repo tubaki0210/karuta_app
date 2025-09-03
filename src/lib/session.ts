@@ -1,8 +1,10 @@
 import { cookies } from "next/headers";
 import { jwtVerify } from "jose";
 import { User } from "@/type/types"; // Userの型定義
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
-
+import {
+  createRouteHandlerClient,
+  createServerComponentClient,
+} from "@supabase/auth-helpers-nextjs";
 const JWT_SECRET = process.env.JWTKEY || "your-secret-key";
 const JWT_KEY = new TextEncoder().encode(process.env.JWTKEY);
 
@@ -30,10 +32,31 @@ const JWT_KEY = new TextEncoder().encode(process.env.JWTKEY);
 //   }
 // }
 
+// export async function getSession() {
+//   // const supabase = createRouteHandlerClient({ cookies });
+//   const supabase = createServerComponentClient({ cookies }); // 変更点
+//   const {
+//     data: { session },
+//   } = await supabase.auth.getSession();
+//   return session;
+// }
+
 export async function getSession() {
-  const supabase = createRouteHandlerClient({ cookies });
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-  return session;
+  // 1. まず `cookies()` を呼び出して、クッキーのインスタンス（ストア）を取得します。
+  const cookieStore = cookies();
+
+  // 2. Supabaseクライアントには、そのインスタンスを返す「関数」を渡します。
+  const supabase = createServerComponentClient({
+    cookies: () => cookieStore,
+  });
+
+  try {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    return user;
+  } catch (error) {
+    console.error("Error getting session:", error);
+    return null;
+  }
 }
