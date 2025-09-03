@@ -15,6 +15,7 @@ const Shimonokupage = () => {
 
   const [isStart, setIsStart] = useState(false);
   const [quizData, setQuizData] = useState<Card[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const handleChangeSettings = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
     const data = { ...settings, [name]: value };
@@ -25,6 +26,7 @@ const Shimonokupage = () => {
   };
 
   const handleStart = async () => {
+    setIsLoading(true);
     const res = await fetch(
       `/api/cards?start_num=${settings.start_num}&end_num=${settings.end_num}`
     );
@@ -35,6 +37,7 @@ const Shimonokupage = () => {
     }
     setQuizData(target_cards);
     setIsStart(true);
+    setIsLoading(false);
   };
 
   if (isStart) {
@@ -57,6 +60,7 @@ const Shimonokupage = () => {
         settings={settings}
         setSettings={setSettings}
         handleStart={handleStart}
+        isLoading={isLoading}
       >
         <div className="flex flex-col gap-3 mt-4">
           <label className="font-bold">出題形式</label>

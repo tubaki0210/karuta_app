@@ -5,14 +5,14 @@ import KyougiKarutaField from "@/components/KyougiKarutaField";
 import { shuffleArray } from "@/lib/Shuffle";
 import { Card } from "@/type/types";
 import { useState } from "react";
-// ... (Poem型やデータ取得のロジックは既存のものを使用)
 
 export default function ListeningQuizPage() {
   const [isStart, setIsstart] = useState(false);
   const [FieldCards, setFieldCards] = useState<Card[]>([]);
   const [AudioCards, setAudioCards] = useState<Card[]>([]);
-
+  const [isLoading, setIsLoading] = useState(false);
   const handleStart = async () => {
+    setIsLoading(true);
     const res = await fetch(`/api/cards`);
     const data = await res.json(); // 全てのカードを取得
     const allCards: Card[] = data.cards;
@@ -22,6 +22,7 @@ export default function ListeningQuizPage() {
     const selectedFieldCards = shuffledForFieldSelection.slice(0, 40);
     setFieldCards(selectedFieldCards);
     setIsstart(true);
+    setIsLoading(false);
   };
 
   if (isStart) {
@@ -37,8 +38,9 @@ export default function ListeningQuizPage() {
       <button
         onClick={() => handleStart()}
         className="bg-green-400 px-4 py-1 text-white font-bold"
+        disabled={isLoading}
       >
-        開始
+        {isLoading ? "クイズデータ取得中" : "開始"}
       </button>
     </div>
   );

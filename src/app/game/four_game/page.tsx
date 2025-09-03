@@ -18,6 +18,7 @@ const FourGamepage = () => {
     end_num: 100,
     format: "follow",
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChangeSettings = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -30,12 +31,14 @@ const FourGamepage = () => {
 
   const handleStartQuiz = async () => {
     // クイズデータをフェッチ
+    setIsLoading(true);
     const res = await fetch(
       `/api/quiz?start_num=${settings.start_num}&end_num=${settings.end_num}&format=${settings.format}`
     );
     const data = await res.json(); // 全てのカードを取得
     setQuizData(data.quizData);
     setIsStart(true);
+    setIsLoading(false);
   };
 
   if (is_start) {
@@ -58,6 +61,7 @@ const FourGamepage = () => {
         settings={settings}
         setSettings={setSettings}
         handleStart={handleStartQuiz}
+        isLoading={isLoading}
       >
         <div className="flex flex-col gap-3 mt-4">
           <label className="font-bold">出題形式</label>

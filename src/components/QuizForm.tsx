@@ -10,10 +10,17 @@ interface Props {
   settings: Settings;
   setSettings: (settings: Settings) => void;
   handleStart: () => void;
+  isLoading: boolean;
   children: React.ReactNode;
 }
 
-const QuizForm = ({ settings, setSettings, handleStart, children }: Props) => {
+const QuizForm = ({
+  settings,
+  setSettings,
+  handleStart,
+  isLoading,
+  children,
+}: Props) => {
   return (
     <div className="bg-white shadow-2xl p-8 flex flex-col   w-[500px]">
       <QuizRange settings={settings} setSettings={setSettings} />
@@ -24,8 +31,9 @@ const QuizForm = ({ settings, setSettings, handleStart, children }: Props) => {
           type="button"
           className="w-2/3 py-3 bg-green-500 text-white font-bold"
           onClick={handleStart}
+          disabled={isLoading}
         >
-          開始
+          {isLoading ? "クイズデータ取得中" : "開始"}
         </button>
       </div>
     </div>

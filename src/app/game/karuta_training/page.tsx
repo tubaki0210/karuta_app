@@ -19,6 +19,7 @@ const KarutaTrainingpage = () => {
     format: "random",
   });
   const [cards, setCards] = useState<Card[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const handleChangeSettings = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
     const data = { ...settings, [name]: value };
@@ -30,12 +31,14 @@ const KarutaTrainingpage = () => {
 
   const handleStart = async () => {
     // クイズデータをフェッチ
+    setIsLoading(true);
     const res = await fetch(`/api/cards`);
     const data = await res.json(); // 全てのカードを取得
     const allCards = data.cards;
     const preparedCards: Card[] = shuffleArray(allCards);
     setCards(preparedCards);
     setIsStart(true);
+    setIsLoading(false);
   };
 
   if (is_start) {
@@ -53,6 +56,7 @@ const KarutaTrainingpage = () => {
         settings={settings}
         setSettings={setSettings}
         handleStart={handleStart}
+        isLoading={isLoading}
       >
         <div className="flex flex-col gap-1 mt-7">
           <label className="font-bold">出題形式</label>
