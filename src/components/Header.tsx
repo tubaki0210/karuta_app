@@ -1,14 +1,12 @@
 "use client";
 import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 
 const Header = () => {
   const { user, logout, isLoading } = useAuth();
   console.log(user);
   const [is_logout, setIsLogout] = useState(false);
-  const router = useRouter();
   const handleLogout = async (e: FormEvent) => {
     e.preventDefault();
     setIsLogout(true);

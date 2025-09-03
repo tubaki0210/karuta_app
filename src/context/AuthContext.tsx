@@ -68,6 +68,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const {
         data: { session },
       } = await supabase.auth.getSession();
+      // getSessionはUIの切り替え表示などの安全性が低くても問題のない場合
+      // getUserはデータベースの更新や認証など安全性が高い必要があるとき
       if (session) {
         SetUser(session.user);
       } else {

@@ -54,6 +54,7 @@ export async function getSession() {
     const {
       data: { user },
     } = await supabase.auth.getUser();
+    // サーバーサイドではgetUserを使う、フロントではgetSession
     return user;
   } catch (error) {
     console.error("Error getting session:", error);
