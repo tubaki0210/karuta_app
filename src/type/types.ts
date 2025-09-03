@@ -27,3 +27,8 @@ export interface WearkCard {
   user_id: number;
   card_id: number;
 }
+
+export interface QuizDataProps {
+  question: Card;
+  options: Card[];
+}

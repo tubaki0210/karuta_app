@@ -1,7 +1,12 @@
-import { QuizDataProps } from "@/app/game/four_game/page";
 import React, { useEffect, useReducer, useState } from "react";
 import QuizResult from "./QuizResult";
 import FourQuizView from "./FourQuizView";
+import { Card } from "@/type/types";
+
+interface QuizDataProps {
+  question: Card;
+  options: Card[];
+}
 
 interface QuizFieldProps {
   quizData: QuizDataProps[];

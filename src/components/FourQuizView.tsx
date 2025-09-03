@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ShimonokuCard from "./ShimonokuCard";
-import { QuizDataProps } from "@/app/game/four_game/page";
 import FlashKaminokuCard from "./FlashKaminokuCard";
+import { QuizDataProps } from "@/type/types";
 
 // propsの型定義をインポートするか、ここで定義
 interface State {

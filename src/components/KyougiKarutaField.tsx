@@ -118,7 +118,6 @@ const KyougiKarutaField = ({
 
   return (
     <div className="px-8 py-20 flex flex-col gap-7">
-      <Header />
       {!isStart && (
         <button
           className="bg-green-400 text-white px-4 py-2 w-1/2 mx-auto hover:bg-green-500"

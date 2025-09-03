@@ -20,11 +20,8 @@ const MemorizePage = async () => {
     <div>
       <h1>単語を覚えよう</h1>
       <Suspense
-        // fallbackには、`weakCards`のロード中に表示したいコンポーネントを指定
-        // ここでは、苦手カードが空の初期状態のMemorizepageを表示しておく
         fallback={<Memorizepage initCards={allCards} initWeakCards={[]} />}
       >
-        {/* 時間のかかるデータ取得は、このコンポーネントに任せる */}
         <WeakCardsComponent userId={userId} allCards={allCards} />
       </Suspense>
     </div>
