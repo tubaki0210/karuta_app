@@ -26,6 +26,7 @@ const MemorizeModal = ({
   handleWeakCard,
 }: MemorizeModalProps) => {
   const { user } = useAuth();
+  console.log(user?.email);
   const [isKimariji, setIsKimariji] = useState(false);
   const [isShimonoku, setIsShimonoku] = useState(true);
   const currentCard =

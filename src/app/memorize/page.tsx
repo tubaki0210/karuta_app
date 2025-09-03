@@ -1,20 +1,39 @@
 import Memorizepage from "@/components/MemorizePage";
-import { FetchCard, FetchWeakCard } from "@/lib/FetchCard";
+import {
+  // FetchCard,
+  FetchCardSupa,
+  // FetchWeakCard,
+  FetchWeakCardSupa,
+} from "@/lib/FetchCard";
 import { getSession } from "@/lib/session"; // 作成した関数をインポート
 
 const MemorizePage = async () => {
-  // サーバーサイドでクッキーからセッション情報を取得
-  const user = await getSession();
-  const userId = user?.id;
-  const allCardsData = FetchCard({});
-  const weakCardsData = userId ? FetchWeakCard(userId) : Promise.resolve([]);
+  // サーバーサイドでセッション情報を取得
+  const session = await getSession();
 
-  const [allCards, weakCards] = await Promise.all([
-    allCardsData,
-    weakCardsData,
-  ]);
-  //   console.log(weakCards);
-  return <Memorizepage initCards={allCards} initWeakCards={weakCards} />;
+  // セッションが存在する場合
+  if (session && session.user) {
+    // userオブジェクトからidを取り出す
+    const userId = session.user.id;
+
+    // userオブジェクトからemailを取り出す
+    const userEmail = session.user.email;
+
+    // 以下、ユーザーIDに基づいてデータをフェッチする処理
+    const allCardsData = FetchCardSupa({});
+    const weakCardsData = FetchWeakCardSupa(userId);
+
+    const [allCards, weakCards] = await Promise.all([
+      allCardsData,
+      weakCardsData,
+    ]);
+    return <Memorizepage initCards={allCards} initWeakCards={weakCards} />;
+  } else {
+    // セッションが存在しない場合、ログインページにリダイレクトするなど
+    const allCardsData = FetchCardSupa({});
+    const [allCards] = await Promise.all([allCardsData]);
+    return <Memorizepage initCards={allCards} initWeakCards={[]} />;
+  }
 };
 
 export default MemorizePage;

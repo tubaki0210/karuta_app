@@ -10,16 +10,16 @@ export interface Card {
 }
 
 export interface User {
-  id: number;
+  id: string;
   email: string;
   password: string;
   nickname: string | null;
 }
 
 export interface UserFront {
-  id: number;
+  id: string;
   email: string;
-  nickname: string | null;
+  nickname?: string | null;
 }
 
 export interface WearkCard {

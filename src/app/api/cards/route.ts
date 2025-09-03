@@ -1,4 +1,4 @@
-import { FetchCard } from "@/lib/FetchCard";
+import { FetchCard, FetchCardSupa } from "@/lib/FetchCard";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest) => {
@@ -14,7 +14,7 @@ export const GET = async (req: NextRequest) => {
       params.start_num = Number(start_num);
       params.end_num = Number(end_num);
     }
-    const cards = await FetchCard(params);
+    const cards = await FetchCardSupa(params);
     return NextResponse.json({ cards });
   } catch (error) {
     return NextResponse.json({ message: error }, { status: 401 });

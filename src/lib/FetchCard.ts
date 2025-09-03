@@ -1,5 +1,6 @@
 import { Card } from "@/type/types";
 import { db } from "./db";
+import { supabase } from "./supabase";
 
 interface FetchCardProps {
   start_num?: number;
@@ -47,5 +48,48 @@ export const FetchWeakCard = async (userId: number): Promise<Card[]> => {
   } catch (error) {
     console.error(error); // サーバー側でエラーをログに出力するとデバッグしやすくなります
     throw new Error("Failed");
+  }
+};
+
+// カードデータを取得する関数
+export const FetchCardSupa = async (
+  params: FetchCardProps
+): Promise<Card[]> => {
+  try {
+    let query = supabase.from("cards").select("*");
+
+    // 範囲指定があれば、`gte` (以上) と `lte` (以下) を使ってフィルタリング
+    if (params.start_num && params.end_num) {
+      query = query
+        .gte("uta_num", params.start_num)
+        .lte("uta_num", params.end_num);
+    }
+
+    // クエリを実行
+    const { data, error } = await query;
+    if (error) throw error;
+
+    return data as Card[];
+  } catch (error) {
+    console.error("Failed to fetch cards:", error);
+    throw new Error("Failed to fetch card data.");
+  }
+};
+// 苦手なカードデータを取得する関数
+export const FetchWeakCardSupa = async (userId: string): Promise<Card[]> => {
+  try {
+    const { data, error } = await supabase
+      .from("weak_cards")
+      .select("cards(*)") // `JOIN`の代わりに、外部キーリレーションを使って関連テーブルのデータを取得
+      .eq("user_id", userId);
+    if (error) throw error;
+
+    // 取得したデータは `weak_cards` レコードの配列であり、その中に `cards` オブジェクトが含まれている
+    // そのため、`map` を使って `cards` のみを抽出する
+    const weakCards = data.map((item) => item.cards);
+    return weakCards.flat() as Card[];
+  } catch (error) {
+    console.error("Failed to fetch weak cards:", error);
+    throw new Error("Failed to fetch weak card data.");
   }
 };

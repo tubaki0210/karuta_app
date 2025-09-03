@@ -12,7 +12,7 @@ import { useAuth } from "@/context/AuthContext";
 import ListCard from "@/components/ListCard";
 import MemorizeModal from "@/components/MemorizeModal";
 import { Card } from "@/type/types";
-import { UpdateWeakCard } from "@/app/actions/actions";
+import { UpdateWeakCard, UpdateWeakCardSupa } from "@/app/actions/actions";
 
 interface MemorizePageProps {
   initCards: Card[];
@@ -49,12 +49,14 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
     const updateCards = initCards.find((c) => c.id === card_id);
     if (!updateCards) return;
     // UI更新
+    console.log("ユーザ情報：" + user.id);
     const isIncluded = optimisticWeakCards.some((c) => c.id === card_id);
     if (isIncluded && isWeakVisible) setCurrentCardId(-1);
     startTransition(() => {
       setOptimisticWeakCards(updateCards);
     });
-    await UpdateWeakCard(user.id, card_id);
+    console.log(user.id);
+    await UpdateWeakCardSupa(user.id, card_id);
   };
   // };
 
