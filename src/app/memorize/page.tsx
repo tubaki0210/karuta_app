@@ -10,7 +10,6 @@ import { getSession } from "@/lib/session"; // 作成した関数をインポー
 const MemorizePage = async () => {
   // サーバーサイドでセッション情報を取得
   const user = await getSession();
-
   // セッションが存在する場合
   if (user && user.id) {
     // userオブジェクトからidを取り出す

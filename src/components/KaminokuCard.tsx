@@ -3,9 +3,6 @@ import React from "react";
 import "../style/Card.css";
 interface Props {
   card: Card;
-  // width: string;
-  // height: string;
-  // fontSize: number;
   isKimariji: boolean;
 }
 
@@ -20,22 +17,9 @@ const KaminokuCard = ({ card, isKimariji }: Props) => {
     border: "8px solid green",
     padding: "12px",
     fontWeight: "bold",
-    // minWidth: width + "px",
-    // minHeight: height + "px",
-    // fontSize: fontSize + "px",
-  };
-
-  const NakanokuStyle: React.CSSProperties = {
-    // marginTop: fontSize + "px",
-  };
-
-  const ShimonokuStyle: React.CSSProperties = {
-    // marginTop: 2 * fontSize + "px",
   };
 
   const KimarijiStyle: React.CSSProperties = {
-    // fontSize: 1.4 * fontSize + "px",
-    // opacity: "0.5",
     writingMode: "vertical-rl",
     position: "absolute",
     color: "red",
@@ -52,8 +36,8 @@ const KaminokuCard = ({ card, isKimariji }: Props) => {
       </div>
       <div className="flex flex-col gap-4">
         <div>{kaminoku}</div>
-        <div style={NakanokuStyle}>{nakanoku}</div>
-        <div style={ShimonokuStyle}>{shimonoku}</div>
+        <div>{nakanoku}</div>
+        <div>{shimonoku}</div>
       </div>
     </div>
   );

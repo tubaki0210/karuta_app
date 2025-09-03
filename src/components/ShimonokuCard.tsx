@@ -3,9 +3,6 @@ import React from "react";
 
 interface Props {
   card: Card;
-  // width: string;
-  // height: string;
-  // fontSize: number;
   isVisible: boolean;
   isReverse: boolean;
   isKimariji?: boolean;
@@ -22,19 +19,8 @@ const ShimonokuCard = ({ card, isVisible, isReverse, isKimariji }: Props) => {
     border: "8px solid green",
     padding: "9px",
     fontWeight: "bold",
-    // minWidth: width + "px",
-    // minHeight: height + "px",
-    // fontSize: fontSize + "px",
     position: "relative",
   };
-
-  const ShimonokuStyle: React.CSSProperties = {
-    // marginTop: fontSize + "px",
-  };
-
-  //   const ShimonokuStyle: React.CSSProperties = {
-  // marginTop: 2 * fontSize + "px",
-  //   };
 
   const KimarijiStyle: React.CSSProperties = {
     writingMode: "vertical-rl",
@@ -55,10 +41,7 @@ const ShimonokuCard = ({ card, isVisible, isReverse, isKimariji }: Props) => {
         <div className={`${isVisible ? "opacity-100" : "opacity-0"} `}>
           {kaminoku}
         </div>
-        <div
-          style={ShimonokuStyle}
-          className={`${isVisible ? "opacity-100" : "opacity-0"} `}
-        >
+        <div className={`${isVisible ? "opacity-100" : "opacity-0"} `}>
           {shimonoku}
         </div>
       </div>

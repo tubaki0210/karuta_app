@@ -58,14 +58,12 @@ export const FetchCardSupa = async (
   try {
     let query = supabase.from("cards").select("*");
 
-    // 範囲指定があれば、`gte` (以上) と `lte` (以下) を使ってフィルタリング
     if (params.start_num && params.end_num) {
       query = query
         .gte("uta_num", params.start_num)
         .lte("uta_num", params.end_num);
     }
 
-    // クエリを実行
     const { data, error } = await query;
     if (error) throw error;
 

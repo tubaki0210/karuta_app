@@ -49,7 +49,6 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
     const updateCards = initCards.find((c) => c.id === card_id);
     if (!updateCards) return;
     // UI更新
-    console.log("ユーザ情報：" + user.id);
     const isIncluded = optimisticWeakCards.some((c) => c.id === card_id);
     if (isIncluded && isWeakVisible) setCurrentCardId(-1);
     startTransition(() => {
@@ -82,7 +81,7 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [handleKeyDown]); // 依存配列がシンプルになる
+  }, [handleKeyDown]);
 
   const listDispCards = isWeakVisible
     ? [...optimisticWeakCards].sort((a, b) => a.uta_num - b.uta_num)

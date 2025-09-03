@@ -14,7 +14,6 @@ const Header = () => {
     setIsLogout(true);
     await logout();
     setIsLogout(false);
-    // router.push("/");
   };
   return (
     <>
@@ -23,7 +22,7 @@ const Header = () => {
           <Link href="/">トップ</Link>
           <Link href="/memorize">覚える</Link>
           <Link href="/game">ゲーム</Link>
-          <Link href="/">設定</Link>
+          {/* <Link href="/">設定</Link> */}
         </div>
         <div>
           {user ? (
