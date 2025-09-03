@@ -60,10 +60,10 @@ const FourQuizView = ({
   };
 
   return (
-    <div className="flex flex-col items-center justify-center mt-20">
+    <div className="flex flex-col items-center justify-center mt-5 md:mt-15">
       <div className="flex flex-col justify-center items-center gap-25">
-        <div className="w-[200px] h-[240px] text-[20px] ">
-          <p className="text-center text-[20px] py-1 text-red-500">上の句</p>
+        <div className="flex flex-col w-[190px] h-[210px] text-[19px] md:w-[200px] md:h-[240px] md:text-[20px] ">
+          <p className="text-center  py-1 text-green-600 font-bold">上の句</p>
           <FlashKaminokuCard card={currentQuiz.question} />
         </div>
         <div className="flex gap-4">
@@ -75,21 +75,21 @@ const FourQuizView = ({
               >
                 {selected === option.id ? (
                   currentQuiz.question.id === option.id ? (
-                    <span className="text-red-500">正解</span>
+                    <span className="text-red-500 text-[17px]">正解</span>
                   ) : (
-                    <span className="text-blue-500">不正解</span>
+                    <span className="text-blue-500 text-[17px]">不正解</span>
                   )
                 ) : (
                   state.isMistaken &&
                   currentQuiz.question.id === option.id && (
-                    <span className="text-red-500">正解</span>
+                    <span className="text-red-500 text-[17px]">正解</span>
                   )
                 )}
               </p>
               <button
                 onClick={() => handleCheckAnswer(option.id)}
                 key={option.id}
-                className="w-[180px] h-[210px] text-[20px]"
+                className="w-[120px] h-[170px] text-[15px] md:w-[160px] md:h-[200px] md:text-[18px]"
                 disabled={state.isMistaken}
               >
                 <ShimonokuCard

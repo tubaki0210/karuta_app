@@ -64,9 +64,9 @@ const FlashKaminokuCard = ({ card }: FlashKaminokuCardProps) => {
     display: "flex",
     // justifyContent: "center",
     // alignItems: "center",
-    backgroundColor: "white",
     border: "8px solid green",
-    padding: "30px",
+    padding: "30px 30px",
+    // margin: "0",
     fontWeight: "bold",
     // minWidth: width + "px",
     // minHeight: height + "px",
@@ -82,7 +82,7 @@ const FlashKaminokuCard = ({ card }: FlashKaminokuCardProps) => {
   };
 
   return (
-    <div style={CardStyle} className="min-w-full min-h-full">
+    <div style={CardStyle} className="min-w-full min-h-full bg-white">
       <div className="flex flex-col gap-4">
         <div ref={kaminokuRef}></div>
         <div ref={nakanokuRef} style={NakanokuStyle}></div>
