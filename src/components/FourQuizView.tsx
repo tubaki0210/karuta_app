@@ -61,8 +61,8 @@ const FourQuizView = ({
 
   return (
     <div className="flex flex-col items-center justify-center md:mt-15">
-      <div className="flex flex-col justify-center items-center gap-10 md:gap-25">
-        <div className="w-[180px] h-[210px] text-[16px] md:w-[200px] md:h-[240px] md:text-[20px] ">
+      <div className="flex flex-col justify-center items-center gap-7 md:gap-25">
+        <div className="w-[180px] h-[205px] text-[16px] md:w-[200px] md:h-[240px] md:text-[20px] ">
           {/* <p className="text-center  py-1 text-green-600 font-bold">上の句</p> */}
           <FlashKaminokuCard card={currentQuiz.question} />
         </div>
@@ -89,7 +89,7 @@ const FourQuizView = ({
               <button
                 onClick={() => handleCheckAnswer(option.id)}
                 key={option.id}
-                className="w-[120px] h-[150px] text-[14px] md:w-[160px] md:h-[200px] md:text-[18px]"
+                className="w-[120px] h-[130px] text-[12px] md:w-[160px] md:h-[200px] md:text-[18px]"
                 disabled={state.isMistaken}
               >
                 <ShimonokuCard
@@ -105,7 +105,7 @@ const FourQuizView = ({
       <button
         type="button"
         onClick={handleNext}
-        className={`mt-6 bg-green-400 text-white px-10 py-2 font-bold ${
+        className={`mt-2 bg-green-400 text-white px-10 py-2 font-bold ${
           state.isMistaken ? "opacity-100" : "opacity-0"
         }`}
       >
