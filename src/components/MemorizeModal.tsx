@@ -37,7 +37,7 @@ const MemorizeModal = ({
   const isInclude = weakCards?.find((c) => c.id === currentCard?.id);
   return (
     <div className="fixed left-0 top-0 w-full h-screen bg-black/75 flex justify-evenly items-center">
-      <div className="flex flex-col mt-5 mb:mt-0 px-1">
+      <div className="flex flex-col mb:mt-0 px-1">
         <div className="flex justify-between">
           <button
             className="p-5 bg-green-300 rounded-full hover:bg-green-500 duration-300"
