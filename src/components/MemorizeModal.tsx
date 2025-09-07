@@ -76,7 +76,7 @@ const MemorizeModal = ({
           <button
             type="button"
             onClick={() => setCurrentCardId((prev) => prev - 1)}
-            className={`rounded-full text-2xl  md:text-6xl p-2 md:p-7 flex justify-center items-center ${
+            className={`rounded-full text-2xl  md:text-6xl p-3 md:p-7 flex justify-center items-center ${
               currentCardId === 0 ? "bg-gray-400" : "bg-green-500"
             }`}
             disabled={currentCardId === 0}
@@ -93,13 +93,13 @@ const MemorizeModal = ({
             >
               <div
                 onClick={() => setIsKimariji((prev) => !prev)}
-                className="w-[150px] h-[210px] text-xl lg:w-[250px] lg:h-[300px] lg:text-3xl md:w-[200px] md:h-[280px] md:text-3xl transition transform hover:scale-105 duration-300"
+                className="w-[150px] h-[190px] text-[15px] lg:w-[250px] lg:h-[300px] lg:text-3xl md:w-[200px] md:h-[280px] md:text-3xl transition transform hover:scale-105 duration-300"
               >
                 <KaminokuCard card={currentCard} isKimariji={isKimariji} />
               </div>
               <div
                 onClick={() => setIsShimonoku((prev) => !prev)}
-                className="w-[150px] h-[210px] text-xl lg:w-[250px] lg:h-[300px] lg:text-3xl md:w-[200px] md:h-[280px] md:text-3xl transition transform hover:scale-105 duration-300"
+                className="w-[150px] h-[190px] text-[15px] lg:w-[250px] lg:h-[300px] lg:text-3xl md:w-[200px] md:h-[280px] md:text-3xl transition transform hover:scale-105 duration-300"
               >
                 <ShimonokuCard
                   card={currentCard}
@@ -112,7 +112,7 @@ const MemorizeModal = ({
           <button
             type="button"
             onClick={() => setCurrentCardId((prev) => prev + 1)}
-            className={`rounded-full  text-6xl p-2 md:p-7 flex justify-center items-center ${
+            className={`rounded-full  text-6xl p-3 md:p-7 flex justify-center items-center ${
               currentCardId === (listDispCards?.length ?? 0) - 1
                 ? "bg-gray-400"
                 : "bg-green-500"
