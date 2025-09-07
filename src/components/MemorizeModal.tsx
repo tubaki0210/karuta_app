@@ -40,7 +40,7 @@ const MemorizeModal = ({
       <div className="flex flex-col mb:mt-0 px-1">
         <div className="flex justify-between">
           <button
-            className="p-5 bg-green-300 rounded-full hover:bg-green-500 duration-300"
+            className="p-3 md:p-5 bg-green-300 rounded-full hover:bg-green-500 duration-300"
             type="button"
             onClick={() => {
               onClose();
@@ -84,7 +84,7 @@ const MemorizeModal = ({
             <ArrowBackIcon className="text-white" />
           </button>
           <div className="flex flex-col items-center">
-            <p className="p-2 bg-white w-1/2 text-center text-2xl mb-10 font-bold">
+            <p className="p-2 bg-green-500 text-white w-1/2 text-center text-2xl mb-10 font-bold rounded-full">
               {currentCard?.uta_num}
             </p>
             <div
