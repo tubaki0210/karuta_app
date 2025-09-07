@@ -37,21 +37,22 @@ const MemorizeModal = ({
   const isInclude = weakCards?.find((c) => c.id === currentCard?.id);
   return (
     <div className="fixed left-0 top-0 w-full h-screen bg-black/75 flex justify-evenly items-center">
-      <button
-        className="fixed top-20 left-20 p-5 bg-green-300 rounded-full hover:bg-green-500 duration-300"
-        type="button"
-        onClick={() => {
-          onClose();
-        }}
-      >
-        <CloseIcon className="text-white" fontSize="large" />
-      </button>
-      {/* 苦手ボタン */}
-      <button
-        onClick={() => handleWeakCard(currentCard.id)}
-        disabled={!user}
-        className={`
-            fixed top-20 right-20
+      <div className="flex flex-col mt-7 mb:mt-0">
+        <div className="flex justify-between">
+          <button
+            className="p-5 bg-green-300 rounded-full hover:bg-green-500 duration-300"
+            type="button"
+            onClick={() => {
+              onClose();
+            }}
+          >
+            <CloseIcon className="text-white" fontSize="large" />
+          </button>
+          {/* 苦手ボタン */}
+          <button
+            onClick={() => handleWeakCard(currentCard.id)}
+            disabled={!user}
+            className={`
             flex items-center justify-center gap-2
             py-2 px-5 rounded-full 
             font-semibold text-base
@@ -66,58 +67,62 @@ const MemorizeModal = ({
                 : "bg-white text-gray-800 border border-gray-300 hover:bg-gray-100"
             }
           `}
-      >
-        {isInclude ? <StarIcon /> : <StarBorderIcon />}
-        <span>苦手</span>
-      </button>
-      <button
-        type="button"
-        onClick={() => setCurrentCardId((prev) => prev - 1)}
-        className={`rounded-full text-2xl  md:text-6xl p-10 flex justify-center items-center ${
-          currentCardId === 0 ? "bg-gray-400" : "bg-green-500"
-        }`}
-        disabled={currentCardId === 0}
-      >
-        <ArrowBackIcon className="text-white" />
-      </button>
-      <div className="flex flex-col items-center">
-        <p className="p-2 bg-white w-1/3 text-center text-2xl mb-20 font-bold">
-          {currentCard?.uta_num}
-        </p>
-        <div
-          key={currentCardId}
-          className={`flex flex-col md:flex-row-reverse md:gap-20 sm:gap-10 gap-5 fade-in-container `}
-        >
-          <div
-            onClick={() => setIsKimariji((prev) => !prev)}
-            className="w-[200px] h-[250px] text-2xl lg:w-[250px] lg:h-[300px] lg:text-3xl md:w-[200px] md:h-[280px] md:text-3xl transition transform hover:scale-105 duration-300"
           >
-            <KaminokuCard card={currentCard} isKimariji={isKimariji} />
-          </div>
-          <div
-            onClick={() => setIsShimonoku((prev) => !prev)}
-            className="w-[200px] h-[250px] text-2xl lg:w-[250px] lg:h-[300px] lg:text-3xl md:w-[200px] md:h-[280px] md:text-3xl transition transform hover:scale-105 duration-300"
+            {isInclude ? <StarIcon /> : <StarBorderIcon />}
+            <span>苦手</span>
+          </button>
+        </div>
+        <div className="flex items-center gap-10">
+          <button
+            type="button"
+            onClick={() => setCurrentCardId((prev) => prev - 1)}
+            className={`rounded-full text-2xl  md:text-6xl p-10 flex justify-center items-center ${
+              currentCardId === 0 ? "bg-gray-400" : "bg-green-500"
+            }`}
+            disabled={currentCardId === 0}
           >
-            <ShimonokuCard
-              card={currentCard}
-              isVisible={isShimonoku}
-              isReverse={false}
-            />
+            <ArrowBackIcon className="text-white" fontSize="large" />
+          </button>
+          <div className="flex flex-col items-center">
+            <p className="p-2 bg-white w-1/2 text-center text-2xl mb-10 font-bold">
+              {currentCard?.uta_num}
+            </p>
+            <div
+              key={currentCardId}
+              className={`flex flex-col md:flex-row-reverse md:gap-20 sm:gap-10 gap-5 fade-in-container `}
+            >
+              <div
+                onClick={() => setIsKimariji((prev) => !prev)}
+                className="w-[150px] h-[210px] text-xl lg:w-[250px] lg:h-[300px] lg:text-3xl md:w-[200px] md:h-[280px] md:text-3xl transition transform hover:scale-105 duration-300"
+              >
+                <KaminokuCard card={currentCard} isKimariji={isKimariji} />
+              </div>
+              <div
+                onClick={() => setIsShimonoku((prev) => !prev)}
+                className="w-[150px] h-[210px] text-xl lg:w-[250px] lg:h-[300px] lg:text-3xl md:w-[200px] md:h-[280px] md:text-3xl transition transform hover:scale-105 duration-300"
+              >
+                <ShimonokuCard
+                  card={currentCard}
+                  isVisible={isShimonoku}
+                  isReverse={false}
+                />
+              </div>
+            </div>
           </div>
+          <button
+            type="button"
+            onClick={() => setCurrentCardId((prev) => prev + 1)}
+            className={`rounded-full  text-6xl p-10 flex justify-center items-center ${
+              currentCardId === (listDispCards?.length ?? 0) - 1
+                ? "bg-gray-400"
+                : "bg-green-500"
+            }`}
+            disabled={currentCardId === (listDispCards?.length ?? 0) - 1}
+          >
+            <ArrowForwardIcon fontSize="large" className="text-white" />
+          </button>
         </div>
       </div>
-      <button
-        type="button"
-        onClick={() => setCurrentCardId((prev) => prev + 1)}
-        className={`rounded-full  text-6xl p-10 flex justify-center items-center ${
-          currentCardId === (listDispCards?.length ?? 0) - 1
-            ? "bg-gray-400"
-            : "bg-green-500"
-        }`}
-        disabled={currentCardId === (listDispCards?.length ?? 0) - 1}
-      >
-        <ArrowForwardIcon fontSize="large" className="text-white" />
-      </button>
     </div>
   );
 };
