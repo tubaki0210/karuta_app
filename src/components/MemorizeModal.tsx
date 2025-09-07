@@ -37,7 +37,7 @@ const MemorizeModal = ({
   const isInclude = weakCards?.find((c) => c.id === currentCard?.id);
   return (
     <div className="fixed left-0 top-0 w-full h-screen bg-black/75 flex justify-evenly items-center">
-      <div className="flex flex-col mt-7 mb:mt-0">
+      <div className="flex flex-col mt-7 mb:mt-0 px-1">
         <div className="flex justify-between">
           <button
             className="p-5 bg-green-300 rounded-full hover:bg-green-500 duration-300"
@@ -76,12 +76,12 @@ const MemorizeModal = ({
           <button
             type="button"
             onClick={() => setCurrentCardId((prev) => prev - 1)}
-            className={`rounded-full text-2xl  md:text-6xl p-10 flex justify-center items-center ${
+            className={`rounded-full text-2xl  md:text-6xl p-2 md:p-7 flex justify-center items-center ${
               currentCardId === 0 ? "bg-gray-400" : "bg-green-500"
             }`}
             disabled={currentCardId === 0}
           >
-            <ArrowBackIcon className="text-white" fontSize="large" />
+            <ArrowBackIcon className="text-white" />
           </button>
           <div className="flex flex-col items-center">
             <p className="p-2 bg-white w-1/2 text-center text-2xl mb-10 font-bold">
@@ -112,14 +112,14 @@ const MemorizeModal = ({
           <button
             type="button"
             onClick={() => setCurrentCardId((prev) => prev + 1)}
-            className={`rounded-full  text-6xl p-10 flex justify-center items-center ${
+            className={`rounded-full  text-6xl p-2 md:p-7 flex justify-center items-center ${
               currentCardId === (listDispCards?.length ?? 0) - 1
                 ? "bg-gray-400"
                 : "bg-green-500"
             }`}
             disabled={currentCardId === (listDispCards?.length ?? 0) - 1}
           >
-            <ArrowForwardIcon fontSize="large" className="text-white" />
+            <ArrowForwardIcon className="text-white" />
           </button>
         </div>
       </div>
