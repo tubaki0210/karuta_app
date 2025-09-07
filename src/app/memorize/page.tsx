@@ -18,7 +18,6 @@ const MemorizePage = async () => {
 
   return (
     <div>
-      <h1>単語を覚えよう</h1>
       <Suspense
         fallback={<Memorizepage initCards={allCards} initWeakCards={[]} />}
       >
