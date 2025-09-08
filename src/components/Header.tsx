@@ -41,7 +41,7 @@ const Header = () => {
         </div>
       </div>
       <div
-        className={`fixed top-0 -left-[170px] min-h-screen w-[170px] z-100 bg-gray-200 duration-300 ${
+        className={`md:hidden fixed top-0 -left-[170px] min-h-screen w-[170px] z-100 bg-gray-200 duration-300 ${
           isMenuOpen ? "left-0" : "-left-[170px]"
         }`}
       >
