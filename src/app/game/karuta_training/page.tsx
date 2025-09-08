@@ -1,11 +1,11 @@
-import Header from "@/components/Header";
+// import Header from "@/components/Header";
 import KarutaGameHaiti from "@/components/KarutaGameHaiti";
 import React from "react";
 
 const KarutaTrainingpage = () => {
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       <KarutaGameHaiti />
     </div>
   );

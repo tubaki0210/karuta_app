@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <div className="bg-green-100">
       <div className="container mx-auto min-h-screen flex justify-center items-center">
-        <Header />
+        {/* <Header /> */}
         <div className="flex flex-col items-center gap-10 md:flex-row justify-evenly w-full text-white mt-5 sm:gap-7 md:gap-20 md-mt-0">
           {link_data.map((item) => (
             <Link

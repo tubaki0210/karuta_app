@@ -1,5 +1,5 @@
 "use client";
-import Header from "@/components/Header";
+// import Header from "@/components/Header";
 import Link from "next/link";
 import React from "react";
 
@@ -26,7 +26,7 @@ const gameLinks = [
 const Gamepage = () => {
   return (
     <div className="py-8 container mx-auto min-h-screen flex flex-col justify-center items-center gap-7 bg-green-100">
-      <Header />
+      {/* <Header /> */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-3xl">
         {/* 配列をmapで展開してリンクを動的に生成 */}
         {gameLinks.map((link) => (

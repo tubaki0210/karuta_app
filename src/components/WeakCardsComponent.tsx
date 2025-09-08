@@ -4,10 +4,6 @@ import { FetchCardSupa, FetchWeakCardSupa } from "@/lib/FetchCard";
 import { Card } from "@/type/types";
 import Memorizepage from "./MemorizePage";
 import { getSession } from "@/lib/session";
-interface WeakCardsComponentProps {
-  userId: string | undefined;
-  allCards: Card[];
-}
 const WeakCardsComponent = async () => {
   const user = await getSession();
   const userId = user?.id;

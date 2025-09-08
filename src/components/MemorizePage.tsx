@@ -99,7 +99,7 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
     <>
       <div className="bg-green-100">
         <div className="py-8 container mx-auto min-h-screen flex flex-col items-center bg-green-100">
-          <Header />
+          {/* <Header /> */}
           <div className="mt-20 flex items-center space-x-2 ">
             <label htmlFor="weak">
               苦手札のみ表示する{!user && "(ログインしてください)"}

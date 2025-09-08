@@ -1,3 +1,4 @@
+import Header from "@/components/Header";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
 
@@ -10,7 +11,10 @@ export default function RootLayout({
     <html lang="ja">
       <body>
         <div className="bg-green-100 px-5">
-          <AuthProvider>{children}</AuthProvider>
+          <AuthProvider>
+            <Header />
+            {children}
+          </AuthProvider>
         </div>
       </body>
     </html>
