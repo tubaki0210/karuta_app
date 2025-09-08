@@ -61,7 +61,7 @@ const FourQuizView = ({
 
   return (
     <div className="flex flex-col items-center justify-center md:mt-15">
-      <div className="flex flex-col justify-center items-center gap-7 md:gap-25">
+      <div className="flex flex-col justify-center items-center gap-7 md:gap-15">
         <div className="w-[180px] h-[205px] text-[16px] md:w-[200px] md:h-[240px] md:text-[20px] ">
           {/* <p className="text-center  py-1 text-green-600 font-bold">上の句</p> */}
           <FlashKaminokuCard card={currentQuiz.question} />
