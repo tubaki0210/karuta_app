@@ -84,32 +84,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     return () => {
       subscription.unsubscribe();
     };
-    // const AuthUser = async () => {
-    //   // Supabaseから現在のセッション情報を取得
-    //   const {
-    //     data: { session },
-    //   } = await supabase.auth.getSession();
-    //   console.log(session);
-    //   // セッションがあれば、アクセストークンをリクエストヘッダーに含める
-    //   if (session) {
-    //     const res = await fetch("/api/me", {
-    //       headers: {
-    //         Authorization: `Bearer ${session.access_token}`,
-    //       },
-    //     });
-
-    //     if (res.ok) {
-    //       const data = await res.json();
-    //       SetUser(data.user);
-    //     } else {
-    //       SetUser(null);
-    //     }
-    //   } else {
-    //     SetUser(null);
-    //   }
-    //   setIsLoading(false);
-    // };
-    // AuthUser();
   }, []);
 
   const value: AuthContextType = {

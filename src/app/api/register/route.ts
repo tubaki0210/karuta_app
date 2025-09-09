@@ -75,7 +75,6 @@ export const POST = async (req: NextRequest) => {
       );
     }
     // 2. 認証成功後、public.usersテーブルにプロフィール情報を追加
-    console.log(data.user.id, email);
     const { error: insertError } = await supabase.from("users").insert({
       id: data.user.id, // auth.usersのidと一致させる
       email: email,

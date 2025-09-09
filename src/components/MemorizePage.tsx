@@ -54,10 +54,8 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
     startTransition(() => {
       setOptimisticWeakCards(updateCards);
     });
-    console.log(user.id);
     await UpdateWeakCardSupa(user.id, card_id);
   };
-  // };
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
