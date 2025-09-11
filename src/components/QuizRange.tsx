@@ -21,6 +21,8 @@ const QuizRange = ({ settings, setSettings }: Props) => {
     setSettings({ ...settings, [name]: value });
   };
 
+  
+
   return (
     <div className="flex flex-col gap-3">
       <label className="font-bold">出題範囲</label>

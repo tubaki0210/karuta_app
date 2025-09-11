@@ -38,9 +38,7 @@ const LoginForm = () => {
   return (
     <div className="w-full max-w-md flex flex-col items-center bg-white py-8 px-6 shadow-md rounded-lg">
       <h1 className="text-2xl font-bold mb-6">ログイン</h1>
-
       {error && <p className="text-center text-red-500 py-3">{error}</p>}
-
       <form
         onSubmit={handleLogin}
         className="flex flex-col items-center w-full gap-6"
@@ -77,9 +75,7 @@ const LoginForm = () => {
           {isLoading ? "ログイン中..." : "ログイン"}
         </button>
       </form>
-
       <div className="w-full border-t border-gray-300 my-5"></div>
-
       <Link
         href="/register"
         className="bg-gray-100 py-3 rounded-lg w-full text-center hover:bg-gray-200"
