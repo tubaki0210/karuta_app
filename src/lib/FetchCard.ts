@@ -62,6 +62,7 @@ export const FetchCardSupa = async (
       query = query
         .gte("uta_num", params.start_num)
         .lte("uta_num", params.end_num);
+      query = query.order("uta_num", { ascending: false });
     }
 
     const { data, error } = await query;
@@ -79,7 +80,8 @@ export const FetchWeakCardSupa = async (userId: string): Promise<Card[]> => {
     const { data, error } = await supabase
       .from("weak_cards")
       .select("cards(*)") // `JOIN`の代わりに、外部キーリレーションを使って関連テーブルのデータを取得
-      .eq("user_id", userId);
+      .eq("user_id", userId)
+      .order("card_id", { ascending: false });
     if (error) throw error;
 
     // 取得したデータは `weak_cards` レコードの配列であり、その中に `cards` オブジェクトが含まれている
