@@ -12,6 +12,7 @@ const FlashKaminokuCard = ({ card }: FlashKaminokuCardProps) => {
   const shimonokuRef = useRef<HTMLDivElement>(null);
   const typingSpeed = 400;
   const timeoutIdsRef = useRef<number[]>([]);
+
   const typeText = (
     text: string,
     elementRef: React.RefObject<HTMLDivElement | null>

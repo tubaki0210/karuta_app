@@ -12,6 +12,8 @@ interface Props {
 }
 
 const QuizRange = ({ settings, setSettings }: Props) => {
+  const start_options = [1, 11, 21, 31, 41, 51, 61, 71, 81, 91];
+  const end_options = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
   const handleChangeSettings = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
     const data = { ...settings, [name]: value };
@@ -20,8 +22,6 @@ const QuizRange = ({ settings, setSettings }: Props) => {
     }
     setSettings({ ...settings, [name]: value });
   };
-
-  
 
   return (
     <div className="flex flex-col gap-3">
@@ -33,16 +33,11 @@ const QuizRange = ({ settings, setSettings }: Props) => {
           className="flex-1 border-b-2 py-1"
           name="start_num"
         >
-          <option value={1}>1</option>
-          <option value={11}>11</option>
-          <option value={21}>21</option>
-          <option value={31}>31</option>
-          <option value={41}>41</option>
-          <option value={51}>51</option>
-          <option value={61}>61</option>
-          <option value={71}>71</option>
-          <option value={81}>81</option>
-          <option value={91}>91</option>
+          {start_options.map((value) => (
+            <option value={value} key={value}>
+              {value}
+            </option>
+          ))}
         </select>
         <span>～</span>
         <select
@@ -51,17 +46,11 @@ const QuizRange = ({ settings, setSettings }: Props) => {
           onChange={(e) => handleChangeSettings(e)}
           name="end_num"
         >
-          <option value={1}>1</option>
-          <option value={10}>10</option>
-          <option value={20}>20</option>
-          <option value={30}>30</option>
-          <option value={40}>40</option>
-          <option value={50}>50</option>
-          <option value={60}>60</option>
-          <option value={70}>70</option>
-          <option value={80}>80</option>
-          <option value={90}>90</option>
-          <option value={100}>100</option>
+          {end_options.map((value) => (
+            <option value={value} key={value}>
+              {value}
+            </option>
+          ))}
         </select>
       </div>
     </div>

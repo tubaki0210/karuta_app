@@ -38,12 +38,12 @@ const FourQuizView = ({
 
   const handleCheckAnswer = (selected_card_id: number) => {
     const correct_id = currentQuiz.question.id;
-    setSelected(selected_card_id);
     if (selected_card_id === correct_id) {
       dispatch({ type: "ANSWER_CORRECT" });
       setSelected(-1);
     } else {
       dispatch({ type: "ANSWER_INCORRECT" });
+      setSelected(selected_card_id);
     }
     if (startTime) {
       const end_time = Date.now();
