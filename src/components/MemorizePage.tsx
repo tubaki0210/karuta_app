@@ -51,10 +51,10 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
     // UI更新
     const isIncluded = optimisticWeakCards.some((c) => c.id === card_id);
     if (isIncluded && isWeakVisible) setCurrentCardId(-1);
-    startTransition(() => {
+    startTransition(async () => {
       setOptimisticWeakCards(updateCards);
+      await UpdateWeakCardSupa(user.id, card_id);
     });
-    await UpdateWeakCardSupa(user.id, card_id);
   };
 
   const handleKeyDown = useCallback(

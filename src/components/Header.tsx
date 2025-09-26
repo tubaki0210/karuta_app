@@ -1,20 +1,27 @@
 "use client";
 import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
+import { usePathname } from "next/navigation";
 const Header = () => {
   const { user, logout, isLoading } = useAuth();
-  console.log(user);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [is_logout, setIsLogout] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [pathname]);
+
   const handleLogout = async (e: FormEvent) => {
     e.preventDefault();
     setIsLogout(true);
     await logout();
     setIsLogout(false);
   };
+
   return (
     <>
       <div className="hidden fixed bg-green-600 text-white py-6 px-15 left-0 right-0 top-0 z-100  md:flex justify-between">
@@ -35,7 +42,7 @@ const Header = () => {
         </div>
       </div>
       {/* ハンバーガーメニュー */}
-      <div className="md:hidden fixed top-10 left-10">
+      <div className="md:hidden fixed top-10 left-10 z-20">
         <div onClick={() => setIsMenuOpen(true)}>
           <MenuIcon fontSize="large" />
         </div>
