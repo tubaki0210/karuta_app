@@ -1,9 +1,11 @@
 import { db } from "@/lib/db";
+import { cookies } from "next/headers";
 import { User } from "@/type/types";
 import { RowDataPacket } from "mysql2";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import { supabase } from "@/lib/supabase";
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 
 type UserQueryResult = User & RowDataPacket;
 
@@ -43,7 +45,7 @@ export const POST = async (req: NextRequest) => {
       { status: 400 }
     );
   }
-
+  const supabase = createRouteHandlerClient({ cookies });
   try {
     const { data, error } = await supabase.auth.signUp({
       email: email,

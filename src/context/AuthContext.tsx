@@ -35,8 +35,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const logout = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (!error) {
+    const res = await fetch("/api/logout", {
+      method: "POST",
+      headers: { "Context-Type": "application/json" },
+    });
+    if (res.ok) {
       // ログアウト成功後、ログインページなどにリダイレクト
       SetUser(null);
       router.push("/");
@@ -53,32 +56,33 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {
-      if (session) {
-        // セッションが存在する場合
-        SetUser(session.user);
-      } else {
-        // セッションが存在しない場合（ログアウトなど）
-        SetUser(null);
-      }
+      SetUser(session?.user ?? null);
+      // if (session) {
+      //   // セッションが存在する場合
+      //   SetUser(session.user);
+      // } else {
+      //   // セッションが存在しない場合（ログアウトなど）
+      //   SetUser(null);
+      // }
       setIsLoading(false);
     });
 
-    // 初期セッションの取得
-    const getInitialSession = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      // getSessionはUIの切り替え表示などの安全性が低くても問題のない場合
-      // getUserはデータベースの更新や認証など安全性が高い必要があるとき
-      if (session) {
-        SetUser(session.user);
-      } else {
-        SetUser(null);
-      }
-      setIsLoading(false);
-    };
+    // // 初期セッションの取得
+    // const getInitialSession = async () => {
+    //   const {
+    //     data: { session },
+    //   } = await supabase.auth.getSession();
+    //   // getSessionはUIの切り替え表示などの安全性が低くても問題のない場合
+    //   // getUserはデータベースの更新や認証など安全性が高い必要があるとき
+    //   if (session) {
+    //     SetUser(session.user);
+    //   } else {
+    //     SetUser(null);
+    //   }
+    //   setIsLoading(false);
+    // };
 
-    getInitialSession();
+    // getInitialSession();
 
     // クリーンアップ関数
     return () => {

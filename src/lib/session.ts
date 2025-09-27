@@ -46,6 +46,7 @@ export async function getSession() {
   const cookieStore = cookies();
 
   // 2. Supabaseクライアントには、そのインスタンスを返す「関数」を渡します。
+  // createServerComponentClientはサーバコンポーネント内で読み込みのみ、ユーザ情報を取得する場合のみ
   const supabase = createServerComponentClient({
     cookies: () => cookieStore,
   });
