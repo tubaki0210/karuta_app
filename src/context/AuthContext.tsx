@@ -57,13 +57,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {
       SetUser(session?.user ?? null);
-      // if (session) {
-      //   // セッションが存在する場合
-      //   SetUser(session.user);
-      // } else {
-      //   // セッションが存在しない場合（ログアウトなど）
-      //   SetUser(null);
-      // }
       setIsLoading(false);
     });
 

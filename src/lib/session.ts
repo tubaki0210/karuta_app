@@ -49,14 +49,20 @@ export async function getSession() {
   // createServerComponentClientはサーバコンポーネント内で読み込みのみ、ユーザ情報を取得する場合のみ
   const supabase = createServerComponentClient({
     cookies: () => cookieStore,
+    // cookies: cookies,
   });
 
   try {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    // const {
+    //   data: { user },
+    // } = await supabase.auth.getUser();
+    const { data, error } = await supabase.auth.getUser();
     // サーバーサイドではgetUserを使う、フロントではgetSession
-    return user;
+    if (error) {
+      console.error("Error getting session:", error);
+      return null;
+    }
+    return data?.user;
   } catch (error) {
     console.error("Error getting session:", error);
     return null;
