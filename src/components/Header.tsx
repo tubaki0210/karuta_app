@@ -5,6 +5,22 @@ import React, { FormEvent, useEffect, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { usePathname } from "next/navigation";
+
+const headerOptions = [
+  {
+    label: "トップ",
+    path: "/",
+  },
+  {
+    label: "覚える",
+    path: "/memorize",
+  },
+  {
+    label: "ゲーム",
+    path: "/game",
+  },
+];
+
 const Header = () => {
   const { user, logout, isLoading } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -26,10 +42,9 @@ const Header = () => {
     <>
       <div className="hidden fixed bg-green-600 text-white py-6 px-15 left-0 right-0 top-0 z-100  md:flex justify-between">
         <div className="flex gap-7">
-          <Link href="/">トップ</Link>
-          <Link href="/memorize">覚える</Link>
-          <Link href="/game">ゲーム</Link>
-          {/* <Link href="/">設定</Link> */}
+          {headerOptions.map((option) => (
+            <Link href={option.path}>{option.label}</Link>
+          ))}
         </div>
         <div>
           {user ? (
@@ -56,24 +71,14 @@ const Header = () => {
           <CloseIcon />
         </div>
         <div className="flex flex-col  mt-6">
-          <Link
-            href="/"
-            className="py-5 pl-3 hover:pl-5 hover:bg-gray-300 duration-300"
-          >
-            トップ
-          </Link>
-          <Link
-            href="/memorize"
-            className="py-5 pl-3 hover:pl-5 hover:bg-gray-300 duration-300"
-          >
-            覚える
-          </Link>
-          <Link
-            href="/game"
-            className="py-5 pl-3 hover:pl-5 hover:bg-gray-300 duration-300"
-          >
-            ゲーム
-          </Link>
+          {headerOptions.map((option) => (
+            <Link
+              href={option.path}
+              className="py-5 pl-3 hover:pl-5 hover:bg-gray-300 duration-300"
+            >
+              {option.label}
+            </Link>
+          ))}
           {user ? (
             <button
               type="button"
