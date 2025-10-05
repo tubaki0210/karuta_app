@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db"; // データベースクライアント
 import { Card } from "@/type/types"; // Cardの型定義
 import _ from "lodash"; // 配列操作に便利なライブラリ
 import { RowDataPacket } from "mysql2";
