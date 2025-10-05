@@ -1,5 +1,4 @@
 "use client";
-import Header from "@/components/Header";
 import QuizForm from "@/components/QuizForm";
 import ShimonokuQuiz from "@/components/ShimonokuQuiz";
 import { shuffleArray } from "@/lib/Shuffle";

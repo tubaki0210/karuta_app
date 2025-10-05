@@ -6,13 +6,12 @@ import React, {
   useState,
   useTransition,
 } from "react";
-import Header from "@/components/Header";
 import "../style/Memorize.css";
 import { useAuth } from "@/context/AuthContext";
 import ListCard from "@/components/ListCard";
 import MemorizeModal from "@/components/MemorizeModal";
 import { Card } from "@/type/types";
-import { UpdateWeakCard, UpdateWeakCardSupa } from "@/app/actions/actions";
+import { UpdateWeakCardSupa } from "@/app/actions/actions";
 
 interface MemorizePageProps {
   initCards: Card[];

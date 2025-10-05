@@ -1,9 +1,7 @@
-// KarutaDan.tsx
 import React from "react";
 import ShimonokuCard from "./ShimonokuCard";
 import { Card } from "@/type/types";
 
-// ★改善ポイント1: propsの型定義を新しい状態管理に合わせる
 interface KarutaDanProps {
   cards: Card[] | undefined;
   isMemorizationPhase: boolean;
@@ -20,7 +18,7 @@ interface CardRowProps {
   isReverse: boolean;
 }
 
-// ★改善ポイント2: 繰り返し部分をコンポーネント化
+// 繰り返し部分をコンポーネント化
 const CardRow = ({
   cards,
   onCardSelect,

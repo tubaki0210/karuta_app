@@ -31,7 +31,6 @@ const FlashKaminokuCard = ({ card }: FlashKaminokuCardProps) => {
             typingSpeed
           ) as unknown as number;
           timeoutIdsRef.current.push(timeoutId);
-          //   setTimeout(typeCharacter, typingSpeed);
         } else {
           // 全ての文字が追加された後、Promiseを解決して終了
           resolve(undefined);
@@ -60,34 +59,20 @@ const FlashKaminokuCard = ({ card }: FlashKaminokuCardProps) => {
       timeoutIdsRef.current = []; // Reset the array
     };
   }, [card.id]);
+
   const CardStyle: React.CSSProperties = {
     writingMode: "vertical-rl",
     display: "flex",
-    // justifyContent: "center",
-    // alignItems: "center",
     border: "8px solid green",
     padding: "30px 30px",
-    // margin: "0",
     fontWeight: "bold",
-    // minWidth: width + "px",
-    // minHeight: height + "px",
-    // fontSize: fontSize + "px",
   };
-
-  const NakanokuStyle: React.CSSProperties = {
-    // marginTop: fontSize + "px",
-  };
-
-  const ShimonokuStyle: React.CSSProperties = {
-    // marginTop: 2 * fontSize + "px",
-  };
-
   return (
     <div style={CardStyle} className="min-w-full min-h-full bg-white">
       <div className="flex flex-col gap-4">
         <div ref={kaminokuRef}></div>
-        <div ref={nakanokuRef} style={NakanokuStyle}></div>
-        <div ref={shimonokuRef} style={ShimonokuStyle}></div>
+        <div ref={nakanokuRef}></div>
+        <div ref={shimonokuRef}></div>
       </div>
     </div>
   );

@@ -2,7 +2,6 @@ import { Card } from "@/type/types";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import KarutaDan from "./KarutaDan";
 import AnswerModal from "./AnswerModal";
-import Header from "./Header";
 
 interface KarutaFieldProps {
   cards: Card[] | undefined;
@@ -18,9 +17,7 @@ const KarutaField = ({ cards }: KarutaFieldProps) => {
   const [revealedCardIds, setRevealedCardIds] = useState<Set<number>>(
     new Set()
   );
-  // ★改善ポイント2: ロジックを大幅にシンプルに
   const handleChangeIsVisible = () => {
-    // 配列をなめる必要はなく、ただフェーズを切り替えるだけ
     setIsVisible((prev) => !prev);
   };
 
@@ -46,7 +43,6 @@ const KarutaField = ({ cards }: KarutaFieldProps) => {
   return (
     <>
       <div className="px-8 py-20 flex flex-col gap-7 ">
-        {/* {isVisible && <span className="text-center">15分で覚えてみよう！</span>} */}
         <button
           className="bg-green-400 text-white px-4 py-2 w-1/2 mx-auto hover:bg-green-500"
           onClick={handleChangeIsVisible}
@@ -58,7 +54,6 @@ const KarutaField = ({ cards }: KarutaFieldProps) => {
           cards={enemyCards}
           isMemorizationPhase={isVisible}
           revealedCardIds={revealedCardIds}
-          // handleIsAnswer={handleIsAnswer}
           onCardSelect={handleIsAnswer}
           is_enemy={true}
         />
@@ -70,7 +65,6 @@ const KarutaField = ({ cards }: KarutaFieldProps) => {
           cards={myCards}
           isMemorizationPhase={isVisible}
           revealedCardIds={revealedCardIds}
-          // handleIsAnswer={handleIsAnswer}
           onCardSelect={handleIsAnswer}
           is_enemy={false}
         />

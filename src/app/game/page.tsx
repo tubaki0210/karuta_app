@@ -1,4 +1,3 @@
-// import Header from "@/components/Header";
 import Link from "next/link";
 import React from "react";
 
@@ -25,12 +24,10 @@ const gameLinks = [
 const Gamepage = () => {
   return (
     <div className="py-8 container mx-auto min-h-screen flex flex-col justify-center items-center gap-7 bg-green-100">
-      {/* <Header /> */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-3xl">
-        {/* 配列をmapで展開してリンクを動的に生成 */}
         {gameLinks.map((link) => (
           <Link
-            key={link.href} // mapで要素を繰り返し描画する際は、一意のkeyを指定します
+            key={link.href}
             href={link.href}
             className="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg shadow-md flex items-center justify-center text-center text-lg transition duration-300 ease-in-out transform hover:scale-105"
           >

@@ -1,6 +1,5 @@
 import { Card } from "@/type/types";
 import React, { useEffect, useMemo, useState } from "react";
-import Header from "./Header";
 import KyougiKarutaDan from "./KyougiKarutaDan";
 
 interface KyougiKarutaFieldProps {
@@ -9,7 +8,6 @@ interface KyougiKarutaFieldProps {
 }
 
 const speak = (text: string) => {
-  // ブラウザが音声合成に対応しているかチェック
   if (typeof window === "undefined" || !window.speechSynthesis) {
     alert("お使いのブラウザは音声読み上げに対応していません。");
     return;
@@ -65,14 +63,8 @@ const KyougiKarutaField = ({
       //   setIsAnswerable(false); // 次の札に進む前に回答を不可に
       const isKarafuda = !fieldCardIds.has(currentCard.id);
       setNextAction("NONE");
-      console.log(currentCard.kamino_ku_kana, isKarafuda ? "【空札】" : "");
       speak(currentCard.kamino_ku_kana);
       setIsAnswerable(true);
-      if (!isKarafuda) {
-        console.log("から札じゃない：" + currentCard.id);
-      } else {
-        console.log("から札");
-      }
       // 空札の場合、6秒後に次の句へ進めるボタン表示
       const timerId = setTimeout(() => {
         setNextAction((prevAction) => {

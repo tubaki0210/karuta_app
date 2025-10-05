@@ -1,11 +1,9 @@
 import FourGameComponent from "@/components/FourGameComponent";
-// import Header from "@/components/Header";
 import React from "react";
 
 const FourGamepage = () => {
   return (
     <div className="py-1 container mx-auto min-h-screen flex justify-center items-center">
-      {/* <Header /> */}
       <FourGameComponent />
     </div>
   );

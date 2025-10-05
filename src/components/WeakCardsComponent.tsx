@@ -1,6 +1,4 @@
-// app/memorize/WeakCardsComponent.js
 import { FetchCardSupa, FetchWeakCardSupa } from "@/lib/FetchCard";
-import { Card } from "@/type/types";
 import Memorizepage from "./MemorizePage";
 import { getSession } from "@/lib/session";
 const WeakCardsComponent = async () => {

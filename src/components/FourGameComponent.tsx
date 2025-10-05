@@ -1,7 +1,7 @@
 "use client";
 import QuizField from "@/components/QuizField";
 import QuizForm from "@/components/QuizForm";
-import { Card, QuizDataProps } from "@/type/types";
+import { QuizDataProps } from "@/type/types";
 import React, { useState } from "react";
 
 const FourGameComponent = () => {

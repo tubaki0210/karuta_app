@@ -1,6 +1,4 @@
 "use client";
-import { supabase } from "@/lib/supabase";
-import { UserFront } from "@/type/types";
 import {
   createClientComponentClient,
   User,
@@ -40,15 +38,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       headers: { "Context-Type": "application/json" },
     });
     if (res.ok) {
-      // ログアウト成功後、ログインページなどにリダイレクト
       SetUser(null);
       router.push("/");
     }
-    // const res = await fetch("/api/logout", { method: "POST" });
-    // if (res.ok) {
-    //   console.log("ログアウト成功");
-    //   SetUser(null);
-    // }
   };
 
   useEffect(() => {
@@ -59,24 +51,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       SetUser(session?.user ?? null);
       setIsLoading(false);
     });
-
-    // 初期セッションの取得
-    // const getInitialSession = async () => {
-    //   const {
-    //     data: { session },
-    //   } = await supabase.auth.getSession();
-    //   // getSessionはUIの切り替え表示などの安全性が低くても問題のない場合
-    //   // getUserはデータベースの更新や認証など安全性が高い必要があるとき
-    //   if (session) {
-    //     SetUser(session.user);
-    //   } else {
-    //     SetUser(null);
-    //   }
-    //   setIsLoading(false);
-    // };
-
-    // getInitialSession();
-
     // クリーンアップ関数
     return () => {
       subscription.unsubscribe();
