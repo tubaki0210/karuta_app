@@ -1,6 +1,7 @@
 export interface Card {
   id: number;
   uta_num: number;
+  author: string;
   kamino_ku_kana: string;
   shimono_ku_kana: string;
   kimariji_kana: string;

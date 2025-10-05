@@ -115,6 +115,7 @@ const QuizField = ({ quizData, setQuizData, setIsStart }: QuizFieldProps) => {
       return;
     }
     setQuizData(state.incorrectCards);
+    setElapsedTime([]);
     dispatch({ type: "RECHALLENGE", incorrectCards: state.incorrectCards });
   };
 

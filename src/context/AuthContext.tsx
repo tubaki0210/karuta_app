@@ -60,7 +60,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setIsLoading(false);
     });
 
-    // // 初期セッションの取得
+    // 初期セッションの取得
     // const getInitialSession = async () => {
     //   const {
     //     data: { session },
