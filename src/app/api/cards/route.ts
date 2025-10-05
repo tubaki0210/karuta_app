@@ -1,4 +1,4 @@
-import { FetchCard, FetchCardSupa } from "@/lib/FetchCard";
+import { FetchCardSupa } from "@/lib/FetchCard";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest) => {

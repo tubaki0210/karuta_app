@@ -51,9 +51,17 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
     // UI更新
     const isIncluded = optimisticWeakCards.some((c) => c.id === card_id);
     if (isIncluded && isWeakVisible) setCurrentCardId(-1);
+    // startTransitionで囲むことでUIのフリーズを防ぎ、安全に裏側の処理を行える
     startTransition(async () => {
       setOptimisticWeakCards(updateCards);
-      await UpdateWeakCardSupa(user.id, card_id);
+      try {
+        await UpdateWeakCardSupa(user.id, card_id);
+        // 上記関数でエラーが発生した場合は関数内でthrowする必要あり
+        // そうすると、呼び出し側で検知しcatchに移行
+        // エラーがスローされた時点で、更新したUIを自動的にもとに戻してくれる
+      } catch {
+        alert("更新失敗");
+      }
     });
   };
 

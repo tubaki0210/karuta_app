@@ -43,7 +43,9 @@ const Header = () => {
       <div className="hidden fixed bg-green-600 text-white py-6 px-15 left-0 right-0 top-0 z-100  md:flex justify-between">
         <div className="flex gap-7">
           {headerOptions.map((option) => (
-            <Link href={option.path}>{option.label}</Link>
+            <Link href={option.path} key={option.label}>
+              {option.label}
+            </Link>
           ))}
         </div>
         <div>
@@ -73,6 +75,7 @@ const Header = () => {
         <div className="flex flex-col  mt-6">
           {headerOptions.map((option) => (
             <Link
+              key={option.label}
               href={option.path}
               className="py-5 pl-3 hover:pl-5 hover:bg-gray-300 duration-300"
             >
