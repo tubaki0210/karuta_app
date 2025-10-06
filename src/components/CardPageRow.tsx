@@ -8,7 +8,10 @@ interface CardPageRowProps {
 const CardPageRow = ({ label, content }: CardPageRowProps) => {
   return (
     <div>
-      <p className="text-left border-b-2 border-black text-3xl py-1">{label}</p>
+      <p className="relative text-left  border-black text-3xl py-1">
+        {label}
+        <span className="absolute bottom-0 left-0 w-full border-2"></span>
+      </p>
       <p className="text-2xl mt-2 ">{content ? content : "なし"}</p>
     </div>
   );
