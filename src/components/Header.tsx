@@ -23,6 +23,7 @@ const headerOptions = [
 
 const Header = () => {
   const { user, logout, isLoading } = useAuth();
+  console.log(user?.email);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [is_logout, setIsLogout] = useState(false);
   const pathname = usePathname();
