@@ -2,7 +2,7 @@ import { FetchCardSupa, FetchWeakCardSupa } from "@/lib/FetchCard";
 import Memorizepage from "./MemorizePage";
 import { getSession } from "@/lib/session";
 const WeakCardsComponent = async () => {
-  const user = await getSession(); // 動的パスでしか使えない
+  const user = await getSession(); // 動的パスでしか使えない(ここではSSR)
   const userId = user?.id;
   // 必須で高速なデータだけを先に取得する
   const allCards = await FetchCardSupa({});
