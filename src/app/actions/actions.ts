@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 
 export async function UpdateWeakCardSupa(userId: string, cardId: number) {
   // 既に登録されているかどうかを確認
+  // throw new Error("error");
   const { data: existingWeakCard, error: selectError } = await supabase
     .from("weak_cards")
     .select("*")

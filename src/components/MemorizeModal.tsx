@@ -12,6 +12,7 @@ interface MemorizeModalProps {
   listDispCards: Card[];
   currentCardId: number;
   setCurrentCardId: React.Dispatch<React.SetStateAction<number>>;
+  isPending: boolean;
   weakCards: Card[];
   onClose: () => void;
   handleWeakCard: (cardId: number) => void;
@@ -21,6 +22,7 @@ const MemorizeModal = ({
   listDispCards,
   currentCardId,
   setCurrentCardId,
+  isPending,
   weakCards,
   onClose,
   handleWeakCard,
@@ -51,7 +53,7 @@ const MemorizeModal = ({
           {/* 苦手ボタン */}
           <button
             onClick={() => handleWeakCard(currentCard.id)}
-            disabled={!user}
+            disabled={!user || isPending}
             className={`
             flex items-center justify-center gap-2
             py-2 px-5 rounded-full 

@@ -59,7 +59,8 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
         // そうすると、呼び出し側で検知しcatchに移行
         // エラーがスローされた時点で、更新したUIを自動的にもとに戻してくれる
       } catch {
-        alert("更新失敗");
+        console.log("更新失敗");
+        // alert("更新失敗");
       }
     });
   };
@@ -128,6 +129,7 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
             listDispCards={listDispCards!}
             currentCardId={currentCardId}
             setCurrentCardId={setCurrentCardId}
+            isPending={isPending}
             weakCards={optimisticWeakCards}
             onClose={onClose}
             handleWeakCard={handleWeakCard}
