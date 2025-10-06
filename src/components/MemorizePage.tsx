@@ -58,9 +58,9 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
         // 上記関数でエラーが発生した場合は関数内でthrowする必要あり
         // そうすると、呼び出し側で検知しcatchに移行
         // エラーがスローされた時点で、更新したUIを自動的にもとに戻してくれる
-      } catch {
-        console.log("更新失敗");
-        // alert("更新失敗");
+      } catch (error) {
+        alert("更新失敗");
+        throw error;
       }
     });
   };
