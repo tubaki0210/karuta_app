@@ -9,6 +9,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 interface AuthContextType {
   user: User | null;
   isLoading: boolean;
+  isLogout: boolean;
   login: (email: string, password: string) => Promise<Response>;
   logout: () => void;
 }
@@ -17,6 +18,7 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, SetUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLogout, setIsLogout] = useState(false);
   const router = useRouter();
   const supabase = createClientComponentClient();
   const login = async (email: string, password: string) => {
@@ -33,14 +35,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const logout = async () => {
+    setIsLogout(true);
     const res = await fetch("/api/logout", {
       method: "POST",
       headers: { "Context-Type": "application/json" },
     });
     if (res.ok) {
       SetUser(null);
-      router.push("/");
+      router.replace("/");
     }
+    setTimeout(() => {
+      setIsLogout(false);
+    }, 100);
   };
 
   useEffect(() => {
@@ -62,6 +68,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     login,
     logout,
     isLoading,
+    isLogout,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -22,10 +22,8 @@ const headerOptions = [
 ];
 
 const Header = () => {
-  const { user, logout, isLoading } = useAuth();
-  // console.log(user?.email);
+  const { user, logout, isLoading, isLogout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [is_logout, setIsLogout] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -34,9 +32,7 @@ const Header = () => {
 
   const handleLogout = async (e: FormEvent) => {
     e.preventDefault();
-    setIsLogout(true);
     await logout();
-    setIsLogout(false);
   };
 
   return (
@@ -99,10 +95,9 @@ const Header = () => {
               ログイン
             </Link>
           )}
-          {/* <Link href="/">設定</Link> */}
         </div>
       </div>
-      {is_logout && (
+      {isLogout && (
         <div className="fixed inset-0 bg-white flex justify-center items-center z-40">
           <p className="bg-green-400 p-6 rounded-full">ログアウト中</p>
         </div>
