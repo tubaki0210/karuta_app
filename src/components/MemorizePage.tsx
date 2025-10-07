@@ -24,7 +24,6 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
   const [isWeakVisible, setIsWeakVisible] = useState(false);
   const { user } = useAuth();
   const [isPending, startTransition] = useTransition();
-  // useOptimisticでユーザー操作に即座に反応するUIを構築
   const [optimisticWeakCards, setOptimisticWeakCards] = useOptimistic(
     initWeakCards,
     (currentWeakCards: Card[], updatedCard: Card) => {
@@ -47,20 +46,14 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
     if (!user) return;
     const updateCards = initCards.find((c) => c.id === card_id);
     if (!updateCards) return;
-    // UI更新
     const isIncluded = optimisticWeakCards.some((c) => c.id === card_id);
     if (isIncluded && isWeakVisible) setCurrentCardId(-1);
-    // startTransitionで囲むことでUIのフリーズを防ぎ、安全に裏側の処理を行える
     startTransition(async () => {
       setOptimisticWeakCards(updateCards);
       try {
         await UpdateWeakCardSupa(user.id, card_id);
-        // 上記関数でエラーが発生した場合は関数内でthrowする必要あり
-        // そうすると、呼び出し側で検知しcatchに移行
-        // エラーがスローされた時点で、更新したUIを自動的にもとに戻してくれる
-      } catch (error) {
+      } catch {
         alert("更新失敗");
-        throw error;
       }
     });
   };
@@ -80,7 +73,7 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
       }
     },
     [isFoucs, isWeakVisible, optimisticWeakCards, initCards]
-  ); // currentCardIdを依存配列から削除
+  );
 
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
@@ -103,10 +96,8 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
 
   return (
     <>
-      {/* <div className="bg-green-100"> */}
-      <div className="py-8 container mx-auto min-h-screen flex flex-col items-center bg-green-100">
-        {/* <Header /> */}
-        <div className="mt-20 flex items-center space-x-2 ">
+      <div className="py-7 container mx-auto flex flex-col items-center">
+        <div className="flex items-center space-x-2 ">
           <label htmlFor="weak">
             苦手札のみ表示する{!user && "(ログインしてください)"}
           </label>
@@ -117,12 +108,11 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
             disabled={!user}
           />
         </div>
-        <div className="mt-10 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-4 pr-4">
+        <div className="mt-7 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-4 pr-4">
           {listDispCards?.map((card) => (
             <ListCard key={card.id} card={card} handleFocus={handleFocus} />
           ))}
         </div>
-        {/* </div> */}
 
         {isFoucs && currentCard && (
           <MemorizeModal

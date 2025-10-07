@@ -23,17 +23,22 @@ const gameLinks = [
 
 const Gamepage = () => {
   return (
-    <div className="py-8 container mx-auto min-h-screen flex flex-col justify-center items-center gap-7 bg-green-100">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-3xl">
-        {gameLinks.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg shadow-md flex items-center justify-center text-center text-lg transition duration-300 ease-in-out transform hover:scale-105"
-          >
-            {link.text}
-          </Link>
-        ))}
+    <div className="py-25 container mx-auto min-h-screen">
+      <h1 className="text-center text-3xl border-2 py-2 bg-white rounded-md">
+        ゲーム一覧
+      </h1>
+      <div className="py-10 flex  justify-center items-center gap-7">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-3xl">
+          {gameLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg shadow-md flex items-center justify-center text-center text-lg transition duration-300 ease-in-out transform hover:scale-105"
+            >
+              {link.text}
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );
