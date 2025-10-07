@@ -85,10 +85,6 @@ erDiagram
 
 ## プレイ動画
 
-### 新規登録・ログイン
-
-https://github.com/user-attachments/assets/229734f3-0d4a-4d17-9381-7f851bfa6873
-
 ### 百人一首の一覧確認・苦手札の登録
 
 https://github.com/user-attachments/assets/609aa0de-dfb4-47a6-8796-534a72805df0
