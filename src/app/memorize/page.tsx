@@ -12,9 +12,13 @@ const MemorizePage = () => {
 
   return (
     <div>
-      <Suspense fallback={<LoadingSpinner />}>
-        <WeakCardsComponent />
-      </Suspense>
+      <div className="bg-green-100">
+        {/* <div className="py-8 container mx-auto min-h-screen flex flex-col items-center bg-green-100"> */}
+        <Suspense fallback={<LoadingSpinner />}>
+          <WeakCardsComponent />
+        </Suspense>
+        {/* </div> */}
+      </div>
     </div>
   );
 };

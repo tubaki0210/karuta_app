@@ -103,26 +103,26 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
 
   return (
     <>
-      <div className="bg-green-100">
-        <div className="py-8 container mx-auto min-h-screen flex flex-col items-center bg-green-100">
-          {/* <Header /> */}
-          <div className="mt-20 flex items-center space-x-2 ">
-            <label htmlFor="weak">
-              苦手札のみ表示する{!user && "(ログインしてください)"}
-            </label>
-            <input
-              type="checkbox"
-              id="weak"
-              onChange={() => setIsWeakVisible((prev) => !prev)}
-              disabled={!user}
-            />
-          </div>
-          <div className="mt-10 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-4 pr-4">
-            {listDispCards?.map((card) => (
-              <ListCard key={card.id} card={card} handleFocus={handleFocus} />
-            ))}
-          </div>
+      {/* <div className="bg-green-100"> */}
+      <div className="py-8 container mx-auto min-h-screen flex flex-col items-center bg-green-100">
+        {/* <Header /> */}
+        <div className="mt-20 flex items-center space-x-2 ">
+          <label htmlFor="weak">
+            苦手札のみ表示する{!user && "(ログインしてください)"}
+          </label>
+          <input
+            type="checkbox"
+            id="weak"
+            onChange={() => setIsWeakVisible((prev) => !prev)}
+            disabled={!user}
+          />
         </div>
+        <div className="mt-10 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-4 pr-4">
+          {listDispCards?.map((card) => (
+            <ListCard key={card.id} card={card} handleFocus={handleFocus} />
+          ))}
+        </div>
+        {/* </div> */}
 
         {isFoucs && currentCard && (
           <MemorizeModal
