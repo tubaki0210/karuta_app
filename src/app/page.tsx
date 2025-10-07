@@ -18,6 +18,7 @@ export default function Home() {
 
   const handleNavigation = (path: string) => {
     router.push(path);
+    console.log("test");
   };
 
   return (
