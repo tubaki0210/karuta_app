@@ -59,7 +59,6 @@ const KarutaDan = ({
     { left: cards.slice(11, 15), right: cards.slice(15, 20) }, // 中段
     { left: cards.slice(20, 23), right: cards.slice(23, 25) }, // 上段
   ];
-
   // ★改善ポイント3: isVisibleの判定ロジックを一元化
   const checkVisibility = (cardId: number) => {
     return isMemorizationPhase || revealedCardIds.has(cardId);

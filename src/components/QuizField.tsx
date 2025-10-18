@@ -47,7 +47,6 @@ const quizReducer = (
 ): State => {
   const isLastQuestion = state.currentIndex === quizData.length - 1;
   const currentCard = quizData[state.currentIndex];
-
   switch (action.type) {
     case "ANSWER_CORRECT":
       return {

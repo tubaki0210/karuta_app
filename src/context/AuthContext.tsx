@@ -1,8 +1,6 @@
 "use client";
-import {
-  createClientComponentClient,
-  User,
-} from "@supabase/auth-helpers-nextjs";
+import { createClient } from "@/utils/supabase/client";
+import { User } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
@@ -20,7 +18,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isLogout, setIsLogout] = useState(false);
   const router = useRouter();
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
+
   const login = async (email: string, password: string) => {
     const res = await fetch("/api/login", {
       method: "POST",
@@ -42,6 +41,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     });
     if (res.ok) {
       SetUser(null);
+      router.refresh();
       router.replace("/");
     }
     setTimeout(() => {

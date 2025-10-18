@@ -103,7 +103,7 @@ const Header = () => {
         </div>
       )}
       {isLoading && (
-        <div className="fixed inset-0 bg-white flex justify-center items-center">
+        <div className="fixed inset-0 bg-white flex justify-center items-center z-40">
           <p className="bg-green-400 p-6 rounded-full">ロード中</p>
         </div>
       )}

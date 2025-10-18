@@ -1,9 +1,5 @@
-import { jwtVerify } from "jose";
-import { NextRequest, NextResponse } from "next/server";
-import {
-  createRouteHandlerClient,
-  createServerComponentClient,
-} from "@supabase/auth-helpers-nextjs";
+import { NextResponse } from "next/server";
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 
 // const JWT_KEY = new TextEncoder().encode(process.env.JWTKEY);

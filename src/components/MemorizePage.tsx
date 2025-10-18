@@ -51,7 +51,7 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
     startTransition(async () => {
       setOptimisticWeakCards(updateCards);
       try {
-        await UpdateWeakCardSupa(user.id, card_id);
+        await UpdateWeakCardSupa(card_id);
       } catch {
         alert("更新失敗");
       }

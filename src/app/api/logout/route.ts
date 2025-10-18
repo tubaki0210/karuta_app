@@ -1,10 +1,9 @@
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
+import { CreateServerClient } from "@/utils/supabase/server";
 
 export const POST = async (req: Request) => {
   // createRouteHandlerClientはサインアップ、ログイン、ログアウトなどの時に必要
-  const supabase = createRouteHandlerClient({ cookies });
+  const supabase = await CreateServerClient();
   const { error } = await supabase.auth.signOut();
   if (error) {
     return NextResponse.json({ message: "ログアウト失敗" }, { status: 401 });

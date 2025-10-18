@@ -60,8 +60,6 @@ const KyougiKarutaField = ({
   useEffect(() => {
     // ゲームがプレイ中かつ、読み上げる札がある場合のみ実行
     if (isStart && currentCard) {
-      //   setIsAnswerable(false); // 次の札に進む前に回答を不可に
-      const isKarafuda = !fieldCardIds.has(currentCard.id);
       setNextAction("NONE");
       speak(currentCard.kamino_ku_kana);
       setIsAnswerable(true);

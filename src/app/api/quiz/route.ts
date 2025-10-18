@@ -1,12 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Card } from "@/type/types"; // Cardの型定義
 import _ from "lodash"; // 配列操作に便利なライブラリ
-import { RowDataPacket } from "mysql2";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/utils/supabase/client";
 
 // GETリクエストを処理するハンドラ
-
-type CardProps = Card[] & RowDataPacket;
 
 // GETリクエストを処理するハンドラ
 export async function GET(req: NextRequest) {
@@ -16,7 +12,7 @@ export async function GET(req: NextRequest) {
   const startNum = parseInt(searchParams.get("start_num") || "1");
   const endNum = parseInt(searchParams.get("end_num") || "100");
   const format = searchParams.get("format") || "follow";
-
+  const supabase = createClient();
   try {
     // 1. データベースから全てのカードを取得
     const { data: allCards, error: allCardsError } = await supabase
@@ -54,7 +50,7 @@ export async function GET(req: NextRequest) {
 
     // 5. 完成したクイズデータをクライアントに返す
     return NextResponse.json({ quizData });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { message: "サーバー側でエラーが発生しました。" },
       { status: 500 }

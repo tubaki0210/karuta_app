@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import ShimonokuCard from "./ShimonokuCard";
 import FlashKaminokuCard from "./FlashKaminokuCard";
 import { QuizDataProps } from "@/type/types";
+import { InsertHistory } from "@/app/actions/fourGameActions";
+import { useAuth } from "@/context/AuthContext";
 
 // propsの型定義をインポートするか、ここで定義
 interface State {
@@ -31,20 +33,21 @@ const FourQuizView = ({
 }: FourQuizViewProps) => {
   const [selected, setSelected] = useState(-1);
   const [startTime, setStartTime] = useState<number | null>(null);
-
+  const { user } = useAuth();
   useEffect(() => {
     setStartTime(Date.now());
   }, [state.currentIndex]);
-
-  const handleCheckAnswer = (selected_card_id: number) => {
+  const handleCheckAnswer = async (selected_card_id: number) => {
     const correct_id = currentQuiz.question.id;
-    if (selected_card_id === correct_id) {
+    const isCorrected = selected_card_id === correct_id;
+    if (isCorrected) {
       dispatch({ type: "ANSWER_CORRECT" });
       setSelected(-1);
     } else {
       dispatch({ type: "ANSWER_INCORRECT" });
       setSelected(selected_card_id);
     }
+    if (user) await InsertHistory(currentQuiz.question.uta_num, isCorrected);
     if (startTime) {
       const end_time = Date.now();
       addElapsedTime((end_time - startTime) / 1000);
@@ -72,16 +75,11 @@ const FourQuizView = ({
                 className={`absolute duration-400 opacity-0 -top-0 left-1/2 text-2xl z-10 transform -translate-x-1/2
                 ${state.isMistaken && "opacity-100 -top-8"}`}
               >
-                {selected === option.id ? (
-                  currentQuiz.question.id === option.id ? (
-                    <span className="text-red-500 text-[17px]">正解</span>
-                  ) : (
-                    <span className="text-blue-500 text-[17px]">不正解</span>
-                  )
+                {state.isMistaken && currentQuiz.question.id === option.id ? (
+                  <span className="text-red-500 text-[17px]">正解</span>
                 ) : (
-                  state.isMistaken &&
-                  currentQuiz.question.id === option.id && (
-                    <span className="text-red-500 text-[17px]">正解</span>
+                  selected === option.id && (
+                    <span className="text-blue-500 text-[17px]">不正解</span>
                   )
                 )}
               </p>

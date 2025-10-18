@@ -1,6 +1,6 @@
 "use client";
 import { useAuth } from "@/context/AuthContext";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 import { InputField } from "./ui/InputField";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
@@ -10,26 +10,30 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [msg, setMsg] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const { login } = useAuth();
-
+  const searchParams = useSearchParams();
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setError("");
+    setMsg("");
     try {
       const res = await login(email, password);
       if (res.ok) {
-        console.log("ログイン成功");
-        router.push("/");
+        const nextUrl = searchParams.get("next") || "/";
+        console.log(nextUrl);
+        router.refresh();
+        // await new Promise((resolve) => setTimeout(resolve, 200));
+        router.replace(nextUrl);
+        return;
       } else {
-        setError("メールアドレスまたはパスワードが正しくありません");
+        setMsg("メールアドレスまたはパスワードが正しくありません");
       }
     } catch (err) {
       console.error("Login failed:", err);
-      setError("ログイン中に予期せぬエラーが発生しました。");
+      setMsg("ログイン中に予期せぬエラーが発生しました。");
     } finally {
       setIsLoading(false);
     }
@@ -38,7 +42,7 @@ const LoginForm = () => {
   return (
     <div className="w-full max-w-md flex flex-col items-center bg-white py-8 px-6 shadow-md rounded-lg">
       <h1 className="text-2xl font-bold mb-6">ログイン</h1>
-      {error && <p className="text-center text-red-500 py-3">{error}</p>}
+      {msg && <p className="text-center text-red-500 py-3">{msg}</p>}
       <form
         onSubmit={handleLogin}
         className="flex flex-col items-center w-full gap-6"

@@ -33,3 +33,11 @@ export interface QuizDataProps {
   question: Card;
   options: Card[];
 }
+
+export interface FourGameAccuracy {
+  card_id: number;
+  kamino_ku_kana: string;
+  total_count: number;
+  correct_count: number;
+  accuracy_rate: number | null;
+}

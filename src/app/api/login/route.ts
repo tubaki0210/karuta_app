@@ -1,11 +1,9 @@
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { NextRequest, NextResponse } from "next/server";
-import { cookies } from "next/headers";
+import { CreateServerClient } from "@/utils/supabase/server";
 
 export async function POST(req: NextRequest) {
   const { email, password } = await req.json();
-  const supabase = createRouteHandlerClient({ cookies });
-
+  const supabase = await CreateServerClient();
   // `auth-helpers`がクッキーを自動で管理
   const { data, error } = await supabase.auth.signInWithPassword({
     email,

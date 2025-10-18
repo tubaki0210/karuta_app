@@ -1,6 +1,5 @@
-import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+import { CreateServerClient } from "@/utils/supabase/server";
 
 export const POST = async (req: NextRequest) => {
   const { email, password } = await req.json();
@@ -10,7 +9,8 @@ export const POST = async (req: NextRequest) => {
       { status: 400 }
     );
   }
-  const supabase = createRouteHandlerClient({ cookies });
+  const supabase = await CreateServerClient();
+
   try {
     const { data, error } = await supabase.auth.signUp({
       email: email,

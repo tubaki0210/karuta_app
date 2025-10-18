@@ -46,25 +46,27 @@ const FourGameComponent = () => {
   }
 
   return (
-    <QuizForm
-      settings={settings}
-      setSettings={setSettings}
-      handleStart={handleStartQuiz}
-      isLoading={isLoading}
-    >
-      <div className="flex flex-col gap-3 mt-4">
-        <label className="font-bold">出題形式</label>
-        <select
-          className="border-b-2 py-2"
-          name="format"
-          value={settings.format}
-          onChange={(e) => handleChangeSettings(e)}
-        >
-          <option value="follow">歌順</option>
-          <option value="random">ランダム</option>
-        </select>
-      </div>
-    </QuizForm>
+    <div className="flex flex-col items-center">
+      <QuizForm
+        settings={settings}
+        setSettings={setSettings}
+        handleStart={handleStartQuiz}
+        isLoading={isLoading}
+      >
+        <div className="flex flex-col gap-3 mt-4">
+          <label className="font-bold">出題形式</label>
+          <select
+            className="border-b-2 py-2"
+            name="format"
+            value={settings.format}
+            onChange={(e) => handleChangeSettings(e)}
+          >
+            <option value="follow">歌順</option>
+            <option value="random">ランダム</option>
+          </select>
+        </div>
+      </QuizForm>
+    </div>
   );
 };
 export default FourGameComponent;
