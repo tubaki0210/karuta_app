@@ -6,10 +6,9 @@ import React from "react";
 
 const FourGameRecordPage = async () => {
   const user = await getSession();
+  console.log(user?.email);
   if (!user) {
-    const redirectTo = "/login?next=/game/record/four_game";
-    // return redirect("/login");
-    return redirect(redirectTo);
+    return <div>エラーです</div>;
   }
   const userId = user.id;
   const data = await FetchFourGameRecord(userId);

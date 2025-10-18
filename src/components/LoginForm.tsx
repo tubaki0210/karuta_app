@@ -27,7 +27,7 @@ const LoginForm = () => {
         console.log(nextUrl);
         router.refresh();
         await new Promise((resolve) => setTimeout(resolve, 200));
-        router.replace(nextUrl);
+        router.replace("/");
         return;
       } else {
         setMsg("メールアドレスまたはパスワードが正しくありません");
