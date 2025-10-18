@@ -1,3 +1,4 @@
+import { useFudaBackGround } from "@/context/FudaBackGroundColor";
 import { Card } from "@/type/types";
 import React from "react";
 
@@ -10,13 +11,14 @@ interface Props {
 
 const ShimonokuCard = ({ card, isVisible, isReverse, isKimariji }: Props) => {
   const [kaminoku, shimonoku] = card.shimono_ku_kana.split(" ");
+  const { backGround } = useFudaBackGround();
   const CardStyle: React.CSSProperties = {
     writingMode: "vertical-rl",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
-    border: "8px solid green",
+    border: `8px solid ${backGround}`,
     padding: "9px",
     fontWeight: "bold",
     position: "relative",

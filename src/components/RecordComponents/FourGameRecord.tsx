@@ -42,7 +42,7 @@ const FourGameRecord = ({ cardsAccuracy }: FourGameRecordProps) => {
         <select
           onChange={(e) => setSortKey(e.target.value as sortkey)}
           value={sortKey}
-          className="border-2 p-1 rounded-md"
+          className="border-1 p-2 rounded-md bg-white"
         >
           <option value="card_id">歌番号順</option>
           <option value="correct_num">正解数が多い順</option>

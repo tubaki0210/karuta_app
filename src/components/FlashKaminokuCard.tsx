@@ -1,3 +1,4 @@
+import { useFudaBackGround } from "@/context/FudaBackGroundColor";
 import { Card } from "@/type/types";
 import React, { useEffect, useRef } from "react";
 
@@ -7,6 +8,7 @@ interface FlashKaminokuCardProps {
 
 const FlashKaminokuCard = ({ card }: FlashKaminokuCardProps) => {
   const [kaminoku, nakanoku, shimonoku] = card.kamino_ku_kana.split(" ");
+  const { backGround } = useFudaBackGround();
   const kaminokuRef = useRef<HTMLDivElement>(null);
   const nakanokuRef = useRef<HTMLDivElement>(null);
   const shimonokuRef = useRef<HTMLDivElement>(null);
@@ -63,7 +65,7 @@ const FlashKaminokuCard = ({ card }: FlashKaminokuCardProps) => {
   const CardStyle: React.CSSProperties = {
     writingMode: "vertical-rl",
     display: "flex",
-    border: "8px solid green",
+    border: `8px solid ${backGround}`,
     padding: "30px 30px",
     fontWeight: "bold",
   };

@@ -19,6 +19,10 @@ const headerOptions = [
     label: "ゲーム",
     path: "/game",
   },
+  {
+    label: "設定",
+    path: "/setting",
+  },
 ];
 
 const Header = () => {
