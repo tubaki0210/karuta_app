@@ -25,10 +25,10 @@ const LoginForm = () => {
       if (res.ok) {
         const nextUrl = searchParams.get("next") || "/";
         console.log(nextUrl);
-        // router.refresh();
+        router.refresh();
         await new Promise((resolve) => setTimeout(resolve, 200));
         router.replace(nextUrl);
-        return;
+        // return;
       } else {
         setMsg("メールアドレスまたはパスワードが正しくありません");
       }
