@@ -1,7 +1,7 @@
 "use client";
 import { FourGameAccuracy } from "@/type/types";
 import React, { useMemo, useState } from "react";
-import FourGameRecordWrap from "./FourGameRecordWrap";
+import FourGameRecordWrap from "./FourGameRecordList";
 
 interface FourGameRecordProps {
   cardsAccuracy: FourGameAccuracy[];

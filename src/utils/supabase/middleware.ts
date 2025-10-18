@@ -32,7 +32,6 @@ export async function updateSession(request: NextRequest) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  console.log(user?.email);
   const NOT_PUBLIC_PATHS = ["/game/record/four_game"];
   //   const notPublicPath = NOT_PUBLIC_PATHS.map((p) => p.replace(/\/$/, ""));
   const nextPath = request.nextUrl.pathname;
