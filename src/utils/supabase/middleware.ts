@@ -41,6 +41,7 @@ export async function updateSession(request: NextRequest) {
   if (!user && isNotPublic) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
+    url.searchParams.set("next", request.nextUrl.pathname); // ← ここで元いたページを保持！
     return NextResponse.redirect(url);
   }
 
