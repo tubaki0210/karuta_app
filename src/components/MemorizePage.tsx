@@ -53,7 +53,7 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
       try {
         await UpdateWeakCardSupa(card_id);
       } catch {
-        alert("更新失敗");
+        setOptimisticWeakCards(updateCards);
       }
     });
   };

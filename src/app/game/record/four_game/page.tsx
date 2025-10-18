@@ -15,7 +15,6 @@ const FourGameRecordPage = async () => {
       <Suspense fallback={<LoadingSpinner />}>
         <FourGameRecordWrap />
       </Suspense>
-      {/* <FourGameRecord cardsAccuracy={data} /> */}
     </div>
   );
 };

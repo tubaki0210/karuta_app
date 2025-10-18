@@ -2,9 +2,6 @@
 import { CreateServerClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 export async function UpdateWeakCardSupa(cardId: number) {
-  // 既に登録されているかどうかを確認
-  // throw new Error("error");
-  // const supabase = createServerActionClient({ cookies });
   const supabase = await CreateServerClient();
   const {
     data: { user },
