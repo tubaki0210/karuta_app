@@ -1,7 +1,7 @@
 "use server";
 import { CreateServerClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
-export async function UpdateWeakCardSupa(cardId: number) {
+export const UpdateWeakCardSupa = async (cardId: number) => {
   const supabase = await CreateServerClient();
   const {
     data: { user },
@@ -37,4 +37,4 @@ export async function UpdateWeakCardSupa(cardId: number) {
   }
   revalidatePath("/memorize");
   return;
-}
+};

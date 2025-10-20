@@ -3,9 +3,7 @@ import _ from "lodash"; // 配列操作に便利なライブラリ
 import { createClient } from "@/utils/supabase/client";
 
 // GETリクエストを処理するハンドラ
-
-// GETリクエストを処理するハンドラ
-export async function GET(req: NextRequest) {
+export const GET = async (req: NextRequest) => {
   const { searchParams } = new URL(req.url);
 
   // URLからクイズの設定を取得
@@ -56,4 +54,4 @@ export async function GET(req: NextRequest) {
       { status: 500 }
     );
   }
-}
+};

@@ -12,6 +12,7 @@ import ListCard from "@/components/ListCard";
 import MemorizeModal from "@/components/MemorizeModal";
 import { Card } from "@/type/types";
 import { UpdateWeakCardSupa } from "@/app/actions/actions";
+import Link from "next/link";
 
 interface MemorizePageProps {
   initCards: Card[];
@@ -99,7 +100,19 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
       <div className="py-7 container mx-auto flex flex-col items-center">
         <div className="flex items-center space-x-2 ">
           <label htmlFor="weak">
-            苦手札のみ表示する{!user && "(ログインしてください)"}
+            苦手札のみ表示する
+            {!user && (
+              <span>
+                （
+                <Link
+                  href="/login?next=/memorize"
+                  className="underline text-blue-300"
+                >
+                  ログイン
+                </Link>
+                してください）
+              </span>
+            )}
           </label>
           <input
             type="checkbox"

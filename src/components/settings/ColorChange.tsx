@@ -3,6 +3,7 @@ import { useFudaBackGround } from "@/context/FudaBackGroundColor";
 import React from "react";
 
 const ColorChange = () => {
+  // Contextから現在の背景色と設定関数を取得
   const { backGround, setBackGround } = useFudaBackGround();
 
   // 選択肢となる色のリスト
@@ -16,6 +17,12 @@ const ColorChange = () => {
     "violet",
     "skyblue",
   ];
+
+  // ラジオボタンの変更を処理する関数
+  const handleColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // 選択された色をContextに保存
+    setBackGround(event.target.value);
+  };
 
   return (
     <div className=" flex flex-col items-center">
@@ -35,7 +42,7 @@ const ColorChange = () => {
                 type="radio"
                 value={color}
                 checked={backGround === color}
-                onChange={(e) => setBackGround(e.target.value)}
+                onChange={handleColorChange}
                 className="sr-only"
               />
             </label>

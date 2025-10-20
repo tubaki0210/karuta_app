@@ -1,6 +1,6 @@
 import { CreateServerClient } from "@/utils/supabase/server";
 
-export async function getSession() {
+export const getSession = async () => {
   try {
     const supabase = await CreateServerClient();
     const { data, error } = await supabase.auth.getUser();
@@ -15,4 +15,4 @@ export async function getSession() {
     console.error("Error getting session:", error);
     return null;
   }
-}
+};

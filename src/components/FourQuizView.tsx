@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useTransition } from "react";
 import ShimonokuCard from "./ShimonokuCard";
 import FlashKaminokuCard from "./FlashKaminokuCard";
 import { QuizDataProps } from "@/type/types";
@@ -33,6 +33,7 @@ const FourQuizView = ({
 }: FourQuizViewProps) => {
   const [selected, setSelected] = useState(-1);
   const [startTime, setStartTime] = useState<number | null>(null);
+  const [isPending, startTransition] = useTransition();
   const { user } = useAuth();
   useEffect(() => {
     setStartTime(Date.now());
@@ -47,7 +48,11 @@ const FourQuizView = ({
       dispatch({ type: "ANSWER_INCORRECT" });
       setSelected(selected_card_id);
     }
-    if (user) await InsertHistory(currentQuiz.question.uta_num, isCorrected);
+    if (user) {
+      startTransition(async () => {
+        await InsertHistory(currentQuiz.question.uta_num, isCorrected);
+      });
+    }
     if (startTime) {
       const end_time = Date.now();
       addElapsedTime((end_time - startTime) / 1000);

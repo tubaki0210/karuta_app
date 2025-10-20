@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { CreateServerClient } from "@/utils/supabase/server";
-
-export async function POST(req: NextRequest) {
+export const POST = async (req: NextRequest) => {
   const { email, password } = await req.json();
   const supabase = await CreateServerClient();
   // `auth-helpers`がクッキーを自動で管理
@@ -23,4 +22,4 @@ export async function POST(req: NextRequest) {
     { message: "ログイン成功", user: data.user },
     { status: 200 }
   );
-}
+};
