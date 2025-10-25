@@ -2,6 +2,7 @@
 import React, {
   useCallback,
   useEffect,
+  useMemo,
   useOptimistic,
   useState,
   useTransition,
@@ -35,12 +36,10 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
     }
   );
 
-  const handleFocus = (id: number) => {
+  const handleFocus = (card_id: number) => {
     setIsFocus(true);
-    if (listDispCards) {
-      const index = listDispCards.findIndex((card) => card.id === id);
-      setCurrentCardId(index);
-    }
+    const index = listDispCards.findIndex((card) => card.id === card_id);
+    setCurrentCardId(index);
   };
 
   const handleWeakCard = async (card_id: number) => {
@@ -83,9 +82,11 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
     };
   }, [handleKeyDown]);
 
-  const listDispCards = isWeakVisible
-    ? [...optimisticWeakCards].sort((a, b) => a.uta_num - b.uta_num)
-    : initCards;
+  const listDispCards = useMemo(() => {
+    return isWeakVisible
+      ? [...optimisticWeakCards].sort((a, b) => a.uta_num - b.uta_num)
+      : initCards;
+  }, [optimisticWeakCards, isWeakVisible, initCards]);
 
   const currentCard =
     currentCardId !== -1 ? listDispCards?.[currentCardId] : null;
@@ -131,6 +132,7 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
           <MemorizeModal
             listDispCards={listDispCards!}
             currentCardId={currentCardId}
+            currentCard={currentCard}
             setCurrentCardId={setCurrentCardId}
             isPending={isPending}
             weakCards={optimisticWeakCards}

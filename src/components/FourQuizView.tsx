@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useTransition } from "react";
+import React, { useState, useEffect, useTransition, useMemo } from "react";
 import ShimonokuCard from "./ShimonokuCard";
 import FlashKaminokuCard from "./FlashKaminokuCard";
 import { QuizDataProps } from "@/type/types";
@@ -21,7 +21,6 @@ interface FourQuizViewProps {
   dispatch: React.Dispatch<Action>;
   quizLength: number;
   addElapsedTime: (time: number) => void;
-  calcClearTime: () => void;
 }
 const FourQuizView = ({
   currentQuiz,
@@ -29,15 +28,15 @@ const FourQuizView = ({
   dispatch,
   quizLength,
   addElapsedTime,
-  calcClearTime,
 }: FourQuizViewProps) => {
   const [selected, setSelected] = useState(-1);
-  const [startTime, setStartTime] = useState<number | null>(null);
   const [isPending, startTransition] = useTransition();
   const { user } = useAuth();
-  useEffect(() => {
-    setStartTime(Date.now());
+
+  const startTime = useMemo(() => {
+    return Date.now();
   }, [state.currentIndex]);
+
   const handleCheckAnswer = async (selected_card_id: number) => {
     const correct_id = currentQuiz.question.id;
     const isCorrected = selected_card_id === correct_id;
@@ -48,6 +47,7 @@ const FourQuizView = ({
       dispatch({ type: "ANSWER_INCORRECT" });
       setSelected(selected_card_id);
     }
+
     if (user) {
       startTransition(async () => {
         await InsertHistory(currentQuiz.question.uta_num, isCorrected);
@@ -60,9 +60,6 @@ const FourQuizView = ({
   };
 
   const handleNext = () => {
-    if (state.currentIndex === quizLength - 1) {
-      calcClearTime();
-    }
     setSelected(-1);
     dispatch({ type: "NEXT_QUESTION" });
   };

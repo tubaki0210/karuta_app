@@ -13,7 +13,7 @@ const KyougikarutaComponent = () => {
     setIsLoading(true);
     const res = await fetch(`/api/cards`);
     const data = await res.json(); // 全てのカードを取得
-    const allCards: Card[] = data.cards;
+    const allCards = data.cards;
     const shuffledAudioCards = shuffleArray([...allCards]);
     setAudioCards(shuffledAudioCards);
     const shuffledForFieldSelection = shuffleArray([...allCards]);

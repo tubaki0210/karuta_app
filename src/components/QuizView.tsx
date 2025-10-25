@@ -1,4 +1,4 @@
-import React, { useState, FormEvent, useEffect } from "react";
+import React, { useState, FormEvent, useEffect, useMemo } from "react";
 import ShimonokuCard from "./ShimonokuCard";
 import { Card } from "@/type/types";
 
@@ -27,7 +27,10 @@ const QuizView = React.forwardRef<HTMLInputElement, QuizViewProps>(
   ) {
     const [inputValue, setInputValue] = useState("");
     const [isAnswerVisible, setIsAnswerVisible] = useState(false);
-    const [startTime, setStartTime] = useState(0);
+    const startTime = useMemo(() => {
+      return Date.now();
+    }, [state.currentIndex]);
+
     const handleSubmit = (e: FormEvent) => {
       e.preventDefault();
       if (currentCard.kimariji_kana === inputValue) {
@@ -47,12 +50,6 @@ const QuizView = React.forwardRef<HTMLInputElement, QuizViewProps>(
       dispatch({ type: "NEXT_QUESTION" });
       setIsAnswerVisible(false);
     };
-
-    useEffect(() => {
-      setStartTime(Date.now());
-    }, [state.currentIndex]);
-
-    const isLastQuestion = state.currentIndex === quizLength - 1;
 
     return (
       <div className="flex flex-col items-center justify-center w-[500px] p-10 bg-green-100">
@@ -96,7 +93,7 @@ const QuizView = React.forwardRef<HTMLInputElement, QuizViewProps>(
             onClick={handleNext}
             className="mt-6 bg-blue-500 text-white px-10 py-2 font-bold"
           >
-            {isLastQuestion ? "結果を見る" : "次へ"}
+            {state.currentIndex === quizLength - 1 ? "結果を見る" : "次へ"}
           </button>
         )}
 

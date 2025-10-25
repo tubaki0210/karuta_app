@@ -12,18 +12,14 @@ const speak = (text: string) => {
     alert("お使いのブラウザは音声読み上げに対応していません。");
     return;
   }
-
   // 既存の発言をキャンセル
   window.speechSynthesis.cancel();
-
   // 新しい発言を作成
   const utterance = new SpeechSynthesisUtterance(text);
-
   // 設定（日本語、速度など）
   utterance.lang = "ja-JP"; // 日本語に設定
   utterance.rate = 0.3; // 読み上げ速度 (0.1から10まで)
   utterance.pitch = 1.3; // 声の高さ (0から2まで)
-
   // 読み上げを実行
   window.speechSynthesis.speak(utterance);
 };
@@ -90,7 +86,6 @@ const KyougiKarutaField = ({
         setCurrentIndex((prev) => prev + 1);
       }, 1000); // 1秒後に次の句へ
     } else {
-      // 【変更点④】お手付きの場合の状態を設定
       setNextAction("OTETSUKI");
       setIsAnswerable(false);
     }

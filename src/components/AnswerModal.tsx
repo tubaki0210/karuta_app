@@ -3,7 +3,7 @@ import { Close } from "@mui/icons-material";
 import React, { FormEvent, useState } from "react";
 
 interface AnswerModalProps {
-  correctCard: Card | undefined;
+  correctCard: Card;
   onClose: () => void;
   onCheckAnswer: () => void;
 }
@@ -23,7 +23,7 @@ const AnswerModal = React.forwardRef<HTMLInputElement, AnswerModalProps>(
 
     const handleCheckAnswer = (e: FormEvent) => {
       e.preventDefault();
-      if (correctCard?.kimariji_kana === inputAnswer) {
+      if (correctCard.kimariji_kana === inputAnswer) {
         setInputAnswer("");
         setIncorrectMsg("");
         setIsAnswerVisible(false);
@@ -36,7 +36,7 @@ const AnswerModal = React.forwardRef<HTMLInputElement, AnswerModalProps>(
     return (
       <div className="fixed inset-0 bg-black/50 flex justify-center items-center">
         <div className="flex flex-col bg-white shadow-2xl p-20 items-center">
-          <div onClick={() => handleClose()} className=" mb-5">
+          <div onClick={() => handleClose()} className="mb-5">
             <Close />
           </div>
           <form
@@ -69,7 +69,7 @@ const AnswerModal = React.forwardRef<HTMLInputElement, AnswerModalProps>(
           {isAnswerVisible && (
             <div className="mt-2 p-3 bg-white rounded-md shadow">
               <p className="font-bold text-lg text-blue-600">
-                {correctCard?.kimariji_kana}
+                {correctCard.kimariji_kana}
               </p>
             </div>
           )}

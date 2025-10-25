@@ -35,7 +35,7 @@ const FourGameComponent = () => {
     setIsLoading(false);
   };
 
-  if (is_start) {
+  if (is_start && quiz_data) {
     return (
       <QuizField
         quizData={quiz_data}

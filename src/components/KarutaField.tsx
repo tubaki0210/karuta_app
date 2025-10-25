@@ -4,7 +4,7 @@ import KarutaDan from "./KarutaDan";
 import AnswerModal from "./AnswerModal";
 
 interface KarutaFieldProps {
-  cards: Card[] | undefined;
+  cards: Card[];
 }
 
 const KarutaField = ({ cards }: KarutaFieldProps) => {
@@ -17,15 +17,13 @@ const KarutaField = ({ cards }: KarutaFieldProps) => {
   const [revealedCardIds, setRevealedCardIds] = useState<Set<number>>(
     new Set()
   );
-  const handleChangeIsVisible = () => {
-    setIsVisible((prev) => !prev);
-  };
 
-  const handleIsAnswer = (card: Card) => {
-    if (isVisible || revealedCardIds.has(card.id)) {
+  const handleIsAnswer = (card_id: number) => {
+    if (isVisible || revealedCardIds.has(card_id)) {
       return;
     }
-    setCorrectCard(card);
+    const targetCard = cards.find((card) => card.id === card_id);
+    setCorrectCard(targetCard);
     setIsAnswer(true);
   };
 
@@ -45,7 +43,7 @@ const KarutaField = ({ cards }: KarutaFieldProps) => {
       <div className="px-8 py-20 flex flex-col gap-7 ">
         <button
           className="bg-green-400 text-white px-4 py-2 w-1/2 mx-auto hover:bg-green-500"
-          onClick={handleChangeIsVisible}
+          onClick={() => setIsVisible((prev) => !prev)}
         >
           {isVisible ? "覚えた" : "もう一回覚える"}
         </button>
@@ -70,11 +68,11 @@ const KarutaField = ({ cards }: KarutaFieldProps) => {
         />
       </div>
 
-      {isAnswer && (
+      {isAnswer && correctCard && (
         <AnswerModal
           correctCard={correctCard}
           onClose={() => setIsAnswer(false)}
-          onCheckAnswer={() => onCorrectAnswer(correctCard!.id)}
+          onCheckAnswer={() => onCorrectAnswer(correctCard.id)}
           ref={InputRef}
         />
       )}

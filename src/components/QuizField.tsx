@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useMemo, useReducer, useState } from "react";
 import QuizResult from "./QuizResult";
 import FourQuizView from "./FourQuizView";
 import { Card } from "@/type/types";
@@ -27,8 +27,7 @@ type Action =
   | { type: "ANSWER_CORRECT" }
   | { type: "ANSWER_INCORRECT" }
   | { type: "NEXT_QUESTION" }
-  | { type: "RECHALLENGE"; incorrectCards: QuizDataProps[] }
-  | { type: "RESET" };
+  | { type: "RECHALLENGE" };
 
 // --- 初期状態 ---
 const initialState: State = {
@@ -88,24 +87,12 @@ const QuizField = ({ quizData, setQuizData, setIsStart }: QuizFieldProps) => {
     (s: State, a: Action) => quizReducer(s, a, quizData),
     initialState
   );
-
   const [elapsedTime, setElapsedTime] = useState<number[]>([]);
-  const [clearTime, setClearTime] = useState(0);
   const currentQuiz = quizData[state.currentIndex];
 
   // 子コンポーネントからタイムを受け取るための関数
   const addElapsedTime = (time: number) => {
     setElapsedTime((prev) => [...prev, time]);
-    console.log(elapsedTime);
-  };
-
-  const calcClearTime = () => {
-    if (elapsedTime.length > 0) {
-      const sum = elapsedTime.reduce((accumulator, currentValue) => {
-        return accumulator + currentValue;
-      }, 0); // 0は初期値
-      setClearTime(sum / elapsedTime.length);
-    }
   };
 
   const handleReChallenge = () => {
@@ -115,17 +102,17 @@ const QuizField = ({ quizData, setQuizData, setIsStart }: QuizFieldProps) => {
     }
     setQuizData(state.incorrectCards);
     setElapsedTime([]);
-    dispatch({ type: "RECHALLENGE", incorrectCards: state.incorrectCards });
+    dispatch({ type: "RECHALLENGE" });
   };
 
-  // クイズが終了した時に平均時間を計算
-  useEffect(() => {
-    if (state.isFinished && elapsedTime.length > 0) {
+  const clearTime = useMemo(() => {
+    if (elapsedTime.length > 0 && state.isFinished) {
       const sum = elapsedTime.reduce((acc, current) => acc + current, 0);
-      setClearTime(sum / elapsedTime.length);
+      return sum / elapsedTime.length;
     }
-  }, [state.isFinished, elapsedTime]);
-  // --- ここまで追加 ---
+    return 0;
+  }, [elapsedTime, state.isFinished]);
+
   return (
     <>
       {state.isFinished ? (
@@ -143,7 +130,6 @@ const QuizField = ({ quizData, setQuizData, setIsStart }: QuizFieldProps) => {
           dispatch={dispatch}
           quizLength={quizData.length}
           addElapsedTime={addElapsedTime}
-          calcClearTime={calcClearTime}
         />
       )}
     </>

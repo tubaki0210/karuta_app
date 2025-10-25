@@ -11,6 +11,7 @@ import ShimonokuCard from "./ShimonokuCard";
 interface MemorizeModalProps {
   listDispCards: Card[];
   currentCardId: number;
+  currentCard: Card;
   setCurrentCardId: React.Dispatch<React.SetStateAction<number>>;
   isPending: boolean;
   weakCards: Card[];
@@ -21,6 +22,7 @@ interface MemorizeModalProps {
 const MemorizeModal = ({
   listDispCards,
   currentCardId,
+  currentCard,
   setCurrentCardId,
   isPending,
   weakCards,
@@ -28,15 +30,9 @@ const MemorizeModal = ({
   handleWeakCard,
 }: MemorizeModalProps) => {
   const { user } = useAuth();
-  console.log(user?.email);
   const [isKimariji, setIsKimariji] = useState(false);
   const [isShimonoku, setIsShimonoku] = useState(true);
-  const currentCard =
-    currentCardId !== -1 ? listDispCards[currentCardId] : null;
-  if (!currentCard) {
-    return null;
-  }
-  const isInclude = weakCards?.find((c) => c.id === currentCard?.id);
+  const isInclude = weakCards.find((c) => c.id === currentCard.id);
   return (
     <div className="z-50 fixed left-0 top-0 w-full h-screen bg-black/75 flex justify-evenly items-center">
       <div className="flex flex-col mb:mt-0 px-1">

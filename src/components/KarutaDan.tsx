@@ -3,16 +3,16 @@ import ShimonokuCard from "./ShimonokuCard";
 import { Card } from "@/type/types";
 
 interface KarutaDanProps {
-  cards: Card[] | undefined;
+  cards: Card[];
   isMemorizationPhase: boolean;
   revealedCardIds: Set<number>;
-  onCardSelect: (card: Card) => void;
+  onCardSelect: (card_id: number) => void;
   is_enemy: boolean;
 }
 
 interface CardRowProps {
   cards: Card[];
-  onCardSelect: (card: Card) => void;
+  onCardSelect: (card_id: number) => void;
   isVisible: (cardId: number) => boolean;
   isVisibleKimariji: (cardId: number) => boolean;
   isReverse: boolean;
@@ -31,7 +31,7 @@ const CardRow = ({
       <div
         className="w-[100px] h-[130px]"
         key={card.id}
-        onClick={() => onCardSelect(card)}
+        onClick={() => onCardSelect(card.id)}
       >
         <ShimonokuCard
           card={card}
@@ -51,8 +51,6 @@ const KarutaDan = ({
   onCardSelect,
   is_enemy,
 }: KarutaDanProps) => {
-  if (!cards) return null;
-
   // 各段の定義
   const tiers = [
     { left: cards.slice(0, 5), right: cards.slice(5, 10) }, // 下段

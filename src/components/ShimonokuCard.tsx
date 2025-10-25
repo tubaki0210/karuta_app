@@ -19,7 +19,7 @@ const ShimonokuCard = ({ card, isVisible, isReverse, isKimariji }: Props) => {
     alignItems: "center",
     backgroundColor: "white",
     border: `8px solid ${backGround}`,
-    padding: "9px",
+    // padding: "9px",
     fontWeight: "bold",
     position: "relative",
   };
@@ -39,7 +39,9 @@ const ShimonokuCard = ({ card, isVisible, isReverse, isKimariji }: Props) => {
       >
         {card.kimariji_kana}
       </div>
-      <div className={`flex flex-col  gap-2 ${isReverse && "rotate-180"}`}>
+      <div
+        className={`flex flex-col  gap-2 ${isReverse && "rotate-180"} bg-white`}
+      >
         <div className={`${isVisible ? "opacity-100" : "opacity-0"} `}>
           {kaminoku}
         </div>

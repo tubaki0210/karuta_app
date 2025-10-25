@@ -1,5 +1,5 @@
 import { Card } from "@/type/types";
-import React, { useEffect, useReducer, useRef, useState } from "react";
+import React, { useEffect, useMemo, useReducer, useRef, useState } from "react";
 import QuizView from "./QuizView"; // クイズ表示用コンポーネント
 import QuizResult from "./QuizResult"; // 結果表示用コンポーネント
 import "../style/Memorize.css";
@@ -92,11 +92,9 @@ const ShimonokuQuiz = ({
 
   const currentQuiz = quizData[state.currentIndex];
   const [elapsedTime, setElapsedTime] = useState<number[]>([]);
-  const [clearTime, setClearTime] = useState(0);
 
   const addElapsedTime = (time: number) => {
     setElapsedTime((prev) => [...prev, time]);
-    console.log(elapsedTime);
   };
 
   const handleReChallenge = () => {
@@ -116,13 +114,13 @@ const ShimonokuQuiz = ({
     }
   }, [state.currentIndex, state.isMistaken]);
 
-  useEffect(() => {
-    if (state.isFinished && elapsedTime.length > 0) {
-      console.log(elapsedTime);
+  const clearTime = useMemo(() => {
+    if (elapsedTime.length > 0 && state.isFinished) {
       const sum = elapsedTime.reduce((acc, current) => acc + current, 0);
-      setClearTime(sum / elapsedTime.length);
+      return sum / elapsedTime.length;
     }
-  }, [state.isFinished, elapsedTime]);
+    return 0;
+  }, [elapsedTime, state.isFinished]);
 
   return (
     <>

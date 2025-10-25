@@ -7,6 +7,7 @@ interface FudaBackGroundColorProps {
 
 const FudaBackGroundColorContext =
   createContext<FudaBackGroundColorProps | null>(null);
+
 export const FudaBackGroundColor = ({
   children,
 }: {
