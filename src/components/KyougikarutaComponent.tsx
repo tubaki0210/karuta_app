@@ -11,16 +11,22 @@ const KyougikarutaComponent = () => {
   const [isLoading, setIsLoading] = useState(false);
   const handleStart = async () => {
     setIsLoading(true);
-    const res = await fetch(`/api/cards`);
-    const data = await res.json(); // 全てのカードを取得
-    const allCards = data.cards;
-    const shuffledAudioCards = shuffleArray([...allCards]);
-    setAudioCards(shuffledAudioCards);
-    const shuffledForFieldSelection = shuffleArray([...allCards]);
-    const selectedFieldCards = shuffledForFieldSelection.slice(0, 40);
-    setFieldCards(selectedFieldCards);
-    setIsstart(true);
-    setIsLoading(false);
+    try {
+      const res = await fetch(`/api/cards`);
+      if (!res.ok) throw new Error("Error");
+      const data = await res.json(); // 全てのカードを取得
+      const allCards = data.cards;
+      const shuffledAudioCards = shuffleArray([...allCards]);
+      setAudioCards(shuffledAudioCards);
+      const shuffledForFieldSelection = shuffleArray([...allCards]);
+      const selectedFieldCards = shuffledForFieldSelection.slice(0, 40);
+      setFieldCards(selectedFieldCards);
+      setIsstart(true);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (isStart) {

@@ -26,17 +26,23 @@ const ShimonokuGameComponent = () => {
 
   const handleStart = async () => {
     setIsLoading(true);
-    const res = await fetch(
-      `/api/cards?start_num=${settings.start_num}&end_num=${settings.end_num}`
-    );
-    const data = await res.json();
-    let target_cards = data.cards;
-    if (settings.format === "random") {
-      target_cards = shuffleArray(data.cards);
+    try {
+      const res = await fetch(
+        `/api/cards?start_num=${settings.start_num}&end_num=${settings.end_num}`
+      );
+      if (!res.ok) throw new Error("Error");
+      const data = await res.json();
+      let target_cards = data.cards;
+      if (settings.format === "random") {
+        target_cards = shuffleArray(data.cards);
+      }
+      setQuizData(target_cards);
+      setIsStart(true);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
     }
-    setQuizData(target_cards);
-    setIsStart(true);
-    setIsLoading(false);
   };
 
   if (isStart) {

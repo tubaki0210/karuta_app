@@ -14,6 +14,7 @@ import MemorizeModal from "@/components/MemorizeModal";
 import { Card } from "@/type/types";
 import { UpdateWeakCardSupa } from "@/app/actions/actions";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface MemorizePageProps {
   initCards: Card[];
@@ -25,6 +26,7 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
   const [isFoucs, setIsFocus] = useState(false);
   const [isWeakVisible, setIsWeakVisible] = useState(false);
   const { user } = useAuth();
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [optimisticWeakCards, setOptimisticWeakCards] = useOptimistic(
     initWeakCards,
@@ -52,6 +54,7 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
       setOptimisticWeakCards(updateCards);
       try {
         await UpdateWeakCardSupa(card_id);
+        router.refresh();
       } catch {
         setOptimisticWeakCards(updateCards);
       }

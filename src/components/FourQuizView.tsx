@@ -47,15 +47,14 @@ const FourQuizView = ({
       dispatch({ type: "ANSWER_INCORRECT" });
       setSelected(selected_card_id);
     }
-
+    if (startTime) {
+      const end_time = Date.now();
+      addElapsedTime((end_time - startTime) / 1000);
+    }
     if (user) {
       startTransition(async () => {
         await InsertHistory(currentQuiz.question.uta_num, isCorrected);
       });
-    }
-    if (startTime) {
-      const end_time = Date.now();
-      addElapsedTime((end_time - startTime) / 1000);
     }
   };
 

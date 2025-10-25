@@ -26,13 +26,19 @@ const FourGameComponent = () => {
   const handleStartQuiz = async () => {
     // クイズデータをフェッチ
     setIsLoading(true);
-    const res = await fetch(
-      `/api/quiz?start_num=${settings.start_num}&end_num=${settings.end_num}&format=${settings.format}`
-    );
-    const data = await res.json(); // 全てのカードを取得
-    setQuizData(data.quizData);
-    setIsStart(true);
-    setIsLoading(false);
+    try {
+      const res = await fetch(
+        `/api/quiz?start_num=${settings.start_num}&end_num=${settings.end_num}&format=${settings.format}`
+      );
+      if (!res.ok) throw new Error("Error");
+      const data = await res.json(); // 全てのカードを取得
+      setQuizData(data.quizData);
+      setIsStart(true);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (is_start && quiz_data) {

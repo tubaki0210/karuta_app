@@ -21,10 +21,8 @@ const LoginForm = () => {
     setMsg("");
     try {
       const res = await login(email, password);
-
       if (res.ok) {
         const nextUrl = searchParams.get("next") || "/";
-        router.refresh();
         await new Promise((resolve) => setTimeout(resolve, 200));
         router.replace(nextUrl);
       } else {

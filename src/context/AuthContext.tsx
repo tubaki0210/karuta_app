@@ -35,18 +35,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const logout = async () => {
     setIsLogout(true);
-    const res = await fetch("/api/logout", {
-      method: "POST",
-      headers: { "Context-Type": "application/json" },
-    });
-    if (res.ok) {
+    try {
+      const res = await fetch("/api/logout", {
+        method: "POST",
+        headers: { "Context-Type": "application/json" },
+      });
+      if (!res.ok) throw new Error("Error");
       SetUser(null);
       router.refresh();
       router.replace("/");
+    } catch (error) {
+      console.log("Error");
+    } finally {
+      setTimeout(() => {
+        setIsLogout(false);
+      }, 100);
     }
-    setTimeout(() => {
-      setIsLogout(false);
-    }, 100);
   };
 
   useEffect(() => {

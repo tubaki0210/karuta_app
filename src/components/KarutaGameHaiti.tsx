@@ -26,16 +26,22 @@ const KarutaGameHaiti = () => {
   const handleStart = async () => {
     // クイズデータをフェッチ
     setIsLoading(true);
-    const res = await fetch(`/api/cards`);
-    const data = await res.json(); // 全てのカードを取得
-    const allCards = data.cards;
-    const preparedCards: Card[] = shuffleArray(allCards);
-    setCards(preparedCards);
-    setIsStart(true);
-    setIsLoading(false);
+    try {
+      const res = await fetch(`/api/cards`);
+      if (!res.ok) throw new Error("Error");
+      const data = await res.json(); // 全てのカードを取得
+      const allCards = data.cards;
+      const preparedCards: Card[] = shuffleArray(allCards);
+      setCards(preparedCards);
+      setIsStart(true);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  if (is_start) {
+  if (is_start && cards) {
     return <KarutaField cards={cards} />;
   }
 
