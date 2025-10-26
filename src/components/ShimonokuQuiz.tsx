@@ -24,8 +24,7 @@ type Action =
   | { type: "ANSWER_CORRECT" }
   | { type: "ANSWER_INCORRECT" }
   | { type: "NEXT_QUESTION" }
-  | { type: "RECHALLENGE"; incorrectCards: Card[] }
-  | { type: "RESET" };
+  | { type: "RECHALLENGE" };
 
 // --- 初期状態 ---
 const initialState: State = {
@@ -36,7 +35,6 @@ const initialState: State = {
   isMistaken: false,
 };
 
-// --- Reducer関数: 全ての状態遷移ロジックをここに集約 ---
 const quizReducer = (state: State, action: Action, quizData: Card[]): State => {
   const isLastQuestion = state.currentIndex === quizData.length - 1;
   const currentCard = quizData[state.currentIndex];
@@ -104,7 +102,7 @@ const ShimonokuQuiz = ({
     }
     setQuizData(state.incorrectCards);
     setElapsedTime([]);
-    dispatch({ type: "RECHALLENGE", incorrectCards: state.incorrectCards });
+    dispatch({ type: "RECHALLENGE" });
   };
 
   useEffect(() => {
@@ -112,7 +110,7 @@ const ShimonokuQuiz = ({
     if (inputRef.current && !state.isMistaken) {
       inputRef.current.focus();
     }
-  }, [state.currentIndex, state.isMistaken]);
+  }, [currentQuiz, state.isMistaken]);
 
   const clearTime = useMemo(() => {
     if (elapsedTime.length > 0 && state.isFinished) {

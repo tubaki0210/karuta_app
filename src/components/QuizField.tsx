@@ -19,7 +19,7 @@ interface State {
   correctCount: number;
   incorrectCards: QuizDataProps[];
   isFinished: boolean;
-  isMistaken: boolean; // isMisAns と nextFlag を統合
+  isMistaken: boolean;
 }
 
 // --- Reducerで管理するアクションの型 ---

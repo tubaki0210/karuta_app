@@ -29,7 +29,7 @@ const QuizView = React.forwardRef<HTMLInputElement, QuizViewProps>(
     const [isAnswerVisible, setIsAnswerVisible] = useState(false);
     const startTime = useMemo(() => {
       return Date.now();
-    }, [state.currentIndex]);
+    }, [currentCard]);
 
     const handleSubmit = (e: FormEvent) => {
       e.preventDefault();

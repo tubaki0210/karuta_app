@@ -49,7 +49,7 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
     const updateCards = initCards.find((c) => c.id === card_id);
     if (!updateCards) return;
     const isIncluded = optimisticWeakCards.some((c) => c.id === card_id);
-    if (isIncluded && isWeakVisible) setCurrentCardId(-1);
+    if (isIncluded) setCurrentCardId(-1);
     startTransition(async () => {
       setOptimisticWeakCards(updateCards);
       try {
@@ -126,14 +126,14 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
           />
         </div>
         <div className="mt-7 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-4 pr-4">
-          {listDispCards?.map((card) => (
+          {listDispCards.map((card) => (
             <ListCard key={card.id} card={card} handleFocus={handleFocus} />
           ))}
         </div>
 
         {isFoucs && currentCard && (
           <MemorizeModal
-            listDispCards={listDispCards!}
+            listDispCards={listDispCards}
             currentCardId={currentCardId}
             currentCard={currentCard}
             setCurrentCardId={setCurrentCardId}

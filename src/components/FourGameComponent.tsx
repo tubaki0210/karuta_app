@@ -7,12 +7,12 @@ import React, { useState } from "react";
 const FourGameComponent = () => {
   const [is_start, setIsStart] = useState(false);
   const [quiz_data, setQuizData] = useState<QuizDataProps[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [settings, setSettings] = useState({
     start_num: 1,
     end_num: 100,
     format: "follow",
   });
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleChangeSettings = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -20,7 +20,7 @@ const FourGameComponent = () => {
     if (Number(data.start_num) >= Number(data.end_num)) {
       return;
     }
-    setSettings({ ...settings, [name]: value });
+    setSettings(data);
   };
 
   const handleStartQuiz = async () => {
@@ -41,7 +41,7 @@ const FourGameComponent = () => {
     }
   };
 
-  if (is_start && quiz_data) {
+  if (is_start && quiz_data.length > 0) {
     return (
       <QuizField
         quizData={quiz_data}

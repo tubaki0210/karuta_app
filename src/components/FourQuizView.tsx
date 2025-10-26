@@ -35,11 +35,10 @@ const FourQuizView = ({
 
   const startTime = useMemo(() => {
     return Date.now();
-  }, [state.currentIndex]);
+  }, [currentQuiz]);
 
   const handleCheckAnswer = async (selected_card_id: number) => {
-    const correct_id = currentQuiz.question.id;
-    const isCorrected = selected_card_id === correct_id;
+    const isCorrected = selected_card_id === currentQuiz.question.id;
     if (isCorrected) {
       dispatch({ type: "ANSWER_CORRECT" });
       setSelected(-1);
