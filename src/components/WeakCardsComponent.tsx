@@ -6,6 +6,7 @@ const WeakCardsComponent = async () => {
   const userId = user?.id;
   const allCards = await FetchCardSupa({});
   const weakCards = userId ? await FetchWeakCardSupa(userId) : [];
+  console.log("再フェッチ");
   return <Memorizepage initCards={allCards} initWeakCards={weakCards} />;
 };
 
