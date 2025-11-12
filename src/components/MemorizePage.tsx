@@ -47,7 +47,7 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
     const updateCards = initCards.find((c) => c.id === card_id);
     if (!updateCards) return;
     const isIncluded = optimisticWeakCards.some((c) => c.id === card_id);
-    if (isIncluded) setCurrentCardId(-1);
+    if (isIncluded && isWeakVisible) setCurrentCardId(-1);
     startTransition(async () => {
       setOptimisticWeakCards(updateCards);
       try {
