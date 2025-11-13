@@ -2,7 +2,7 @@ import LoadingSpinner from "@/components/Loading/LoadingSpinner";
 import WeakCardsComponent from "@/components/WeakCardsComponent";
 import { Suspense } from "react";
 
-const MemorizePage = async () => {
+const MemorizePage = () => {
   return (
     <div>
       <div className="py-25">
