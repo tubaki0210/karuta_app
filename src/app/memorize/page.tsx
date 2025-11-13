@@ -1,11 +1,8 @@
 import LoadingSpinner from "@/components/Loading/LoadingSpinner";
 import WeakCardsComponent from "@/components/WeakCardsComponent";
-import { FetchCardSupa } from "@/lib/FetchCard";
 import { Suspense } from "react";
 
-const MemorizePage = async () => {
-  const allCards = await FetchCardSupa({});
-
+const MemorizePage = () => {
   return (
     <div>
       <div className="py-25">
@@ -13,7 +10,7 @@ const MemorizePage = async () => {
           百人一首一覧
         </h1>
         <Suspense fallback={<LoadingSpinner />}>
-          <WeakCardsComponent allCards={allCards} />
+          <WeakCardsComponent />
         </Suspense>
       </div>
     </div>
