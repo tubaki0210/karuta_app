@@ -10,6 +10,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja">
+      <title>百人一首記憶アプリ</title>
       <body>
         <div className="bg-green-100 min-h-screen px-5">
           <AuthProvider>
