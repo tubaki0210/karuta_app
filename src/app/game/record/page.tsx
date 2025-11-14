@@ -3,7 +3,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
 
-const GameRecordPage = async () => {
+const GameRecordPage = () => {
   // const user = await getSession();
   // if (!user) {
   //   return <div>エラー：ユーザー情報が取得できませんでした。</div>;
