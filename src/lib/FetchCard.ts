@@ -1,6 +1,7 @@
 import { Card, FourGameAccuracy } from "@/type/types";
 import { createClient } from "@/utils/supabase/client";
 import { CreateServerClient } from "@/utils/supabase/server";
+import { unstable_cache } from "next/cache";
 
 interface FetchCardProps {
   id?: number;
@@ -26,27 +27,35 @@ export const FetchCardByIdSupa = async (id: number): Promise<Card> => {
 };
 
 // カードデータを取得する関数
-export const FetchCardSupa = async (
-  params: FetchCardProps
-): Promise<Card[]> => {
-  try {
-    const supabase = createClient();
-    let query = supabase.from("cards").select("*").order("uta_num");
+// 実際のデータ取得ロジック（内部関数として定義）
+const getCardsFromSupabase = async (params: FetchCardProps) => {
+  const supabase = createClient();
+  let query = supabase.from("cards").select("*").order("uta_num");
 
-    if (params.start_num && params.end_num) {
-      query = query
-        .gte("uta_num", params.start_num)
-        .lte("uta_num", params.end_num);
-    }
-
-    const { data, error } = await query;
-    if (error) throw error;
-
-    return data as Card[];
-  } catch (error) {
-    console.error("Failed to fetch cards:", error);
-    throw new Error("Failed to fetch card data.");
+  if (params.start_num && params.end_num) {
+    query = query
+      .gte("uta_num", params.start_num)
+      .lte("uta_num", params.end_num);
   }
+
+  const { data, error } = await query;
+  if (error) throw error;
+  return data as Card[];
+};
+
+// ★ここが重要：unstable_cacheでラップしてエクスポート
+export const FetchCardSupa = async (params: FetchCardProps) => {
+  // キャッシュのキーを作成（パラメータが違うときは別のキャッシュを作るため）
+  const cacheKey = ["cards", String(params.start_num ?? "all"), String(params.end_num ?? "all")];
+
+  return unstable_cache(
+    async () => getCardsFromSupabase(params),
+    cacheKey, // 1. キャッシュを一意に特定するキーの配列
+    {
+      // revalidate: 86400, // 2. キャッシュの有効期限（秒）。例: 1時間
+      tags: ["cards"],  // 3. 後で手動でキャッシュ破棄(revalidateTag)するためのタグ
+    }
+  )();
 };
 // 苦手なカードデータを取得する関数
 export const FetchWeakCardSupa = async (userId: string): Promise<Card[]> => {
