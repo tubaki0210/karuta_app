@@ -19,7 +19,6 @@ const LoadingUI = () => {
 };
 
 const MemorizePage = async() => {
-  const allCards = await FetchCardSupa({});
   return (
     <div>
       <div className="py-25">
@@ -28,7 +27,7 @@ const MemorizePage = async() => {
         </h1>
         {/* これ以下SSR */}
         <Suspense fallback={<LoadingUI />}>
-          <WeakCardsComponent allCards={allCards} />
+          <WeakCardsComponent/>
         </Suspense>
       </div>
     </div>
