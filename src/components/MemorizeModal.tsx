@@ -87,7 +87,7 @@ const MemorizeModal = ({
             </p>
             <div
               key={currentCardId}
-              className={`flex flex-col md:flex-row-reverse md:gap-20 sm:gap-10 gap-5 fade-in-container `}
+              className={`flex flex-col md:flex-row-reverse md:gap-20 sm:gap-10 gap-5 fade-in-container`}
             >
               <div
                 onClick={() => setIsKimariji((prev) => !prev)}

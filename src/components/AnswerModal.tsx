@@ -34,7 +34,7 @@ const AnswerModal = React.forwardRef<HTMLInputElement, AnswerModalProps>(
     };
 
     return (
-      <div className="fixed inset-0 bg-black/50 flex justify-center items-center">
+      <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-10">
         <div className="flex flex-col bg-white shadow-2xl p-20 items-center">
           <div onClick={() => handleClose()} className="mb-5">
             <Close />
