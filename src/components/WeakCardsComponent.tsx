@@ -10,8 +10,12 @@ import { Card } from "@/type/types";
 const WeakCardsComponent = async () => {
   const user = await getSession();
   const userId = user?.id;
-  const allCards = await FetchCardSupa({});
-  const weakCards = userId ? await FetchWeakCardSupa(userId) : [];
+  // const allCards = await FetchCardSupa({});
+  // const weakCards = userId ? await FetchWeakCardSupa(userId) : [];
+  const [allCards, weakCards] = await Promise.all([
+    FetchCardSupa({}), 
+    userId ? FetchWeakCardSupa(userId) : Promise.resolve([])
+  ]);
   return <Memorizepage initCards={allCards} initWeakCards={weakCards} />;
 };
 
