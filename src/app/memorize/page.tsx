@@ -1,5 +1,6 @@
 import LoadingSpinner from "@/components/Loading/LoadingSpinner";
 import WeakCardsComponent from "@/components/WeakCardsComponent";
+import { FetchCardSupa } from "@/lib/FetchCard";
 import { Suspense } from "react";
 
 const LoadingUI = () => {
@@ -17,7 +18,8 @@ const LoadingUI = () => {
   );
 };
 
-const MemorizePage = () => {
+const MemorizePage = async() => {
+  const allCards = await FetchCardSupa({});
   return (
     <div>
       <div className="py-25">
@@ -26,7 +28,7 @@ const MemorizePage = () => {
         </h1>
         {/* これ以下SSR */}
         <Suspense fallback={<LoadingUI />}>
-          <WeakCardsComponent />
+          <WeakCardsComponent allCards={allCards} />
         </Suspense>
       </div>
     </div>
