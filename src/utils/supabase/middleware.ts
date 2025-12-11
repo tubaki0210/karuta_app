@@ -2,11 +2,9 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 export const updateSession = async (request: NextRequest) => {
-  // let supabaseResponse = NextResponse.next({
-  //   request,
-  // });
-  const response = NextResponse.next();
-
+  let supabaseResponse = NextResponse.next({
+    request,
+  });
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -24,7 +22,14 @@ export const updateSession = async (request: NextRequest) => {
           // });
           cookiesToSet.forEach(({ name, value, options }) =>
             // supabaseResponse.cookies.set(name, value, options)
-            response.cookies.set(name, value, options)
+            // response.cookies.set(name, value, options)
+            request.cookies.set(name, value)
+          );
+          supabaseResponse = NextResponse.next({
+            request,
+          });
+          cookiesToSet.forEach(({ name, value, options }) =>
+            supabaseResponse.cookies.set(name, value, options)
           );
         },
       },
@@ -37,14 +42,24 @@ export const updateSession = async (request: NextRequest) => {
   const NOT_PUBLIC_PATHS = ["/game/record/four_game"];
   //   const notPublicPath = NOT_PUBLIC_PATHS.map((p) => p.replace(/\/$/, ""));
   const nextPath = request.nextUrl.pathname;
-  const isNotPublic = NOT_PUBLIC_PATHS.some((path) => nextPath === path);
+  const isNotPublic = NOT_PUBLIC_PATHS.some((path) => nextPath.startsWith(path));
+  // 未ログインユーザが非公開ページにアクセスした場合、ログインページへリダイレクト
   if (!user && isNotPublic) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     url.searchParams.set("next", request.nextUrl.pathname); // ← ここで元いたページを保持！
     return NextResponse.redirect(url);
   }
-
-  // return supabaseResponse;
-  return response;
+  // ログイン済みのユーザがログイン・新規登録ページにアクセスした場合、nextがなければホームへリダイレクト
+  const AUTH_PATHS = ["/login", "/register"];
+  const isAuthPath = AUTH_PATHS.some((path) => nextPath === path);
+  if (user && isAuthPath) {
+    const url = request.nextUrl.clone();
+    const nextParam = request.nextUrl.searchParams.get("next");
+    url.pathname = nextParam || "/";
+    // url.pathname = "/";
+    return NextResponse.redirect(url);
+  }
+  return supabaseResponse;
+  // return response;
 };

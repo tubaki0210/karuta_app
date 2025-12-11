@@ -1,7 +1,7 @@
 "use client";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import { InputField } from "./ui/InputField";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import Link from "next/link";
@@ -13,8 +13,23 @@ const LoginForm = () => {
   const [msg, setMsg] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
-  const { login } = useAuth();
+  const { user, login } = useAuth();
   const searchParams = useSearchParams();
+  const nextUrl = searchParams.get("next") || "/";
+  useEffect(() => {
+    if (user) {
+      const timer = setTimeout(() => {
+        router.replace(nextUrl);
+      }, 1000); // 1秒待機してから遷移
+
+      return () => clearTimeout(timer);
+    }
+  }, [user, router, nextUrl]);
+
+  if (user) {
+    return <div>Loading...</div>;
+  }
+  
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -22,9 +37,9 @@ const LoginForm = () => {
     try {
       const res = await login(email, password);
       if (res.ok) {
-        const nextUrl = searchParams.get("next") || "/";
-        await new Promise((resolve) => setTimeout(resolve, 200));
-        router.replace(nextUrl);
+        router.refresh();
+        // await new Promise((resolve) => setTimeout(resolve, 1000));
+        // router.replace(nextUrl);
       } else {
         setMsg("メールアドレスまたはパスワードが正しくありません");
       }
