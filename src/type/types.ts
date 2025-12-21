@@ -31,7 +31,7 @@ export interface WearkCard {
 
 export interface QuizDataProps {
   question: Card;
-  options: Card[];
+  options?: Card[];
 }
 
 export interface FourGameAccuracy {

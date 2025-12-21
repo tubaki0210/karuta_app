@@ -2,7 +2,7 @@
 import QuizForm from "@/components/QuizForm";
 import ShimonokuQuiz from "@/components/ShimonokuQuiz";
 import { shuffleArray } from "@/lib/Shuffle";
-import { Card } from "@/type/types";
+import { Card, QuizDataProps } from "@/type/types";
 import React, { useState } from "react";
 
 const ShimonokuGameComponent = () => {
@@ -13,7 +13,7 @@ const ShimonokuGameComponent = () => {
   });
 
   const [isStart, setIsStart] = useState(false);
-  const [quizData, setQuizData] = useState<Card[]>([]);
+  const [quizData, setQuizData] = useState<QuizDataProps[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const handleChangeSettings = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -36,7 +36,13 @@ const ShimonokuGameComponent = () => {
       if (settings.format === "random") {
         target_cards = shuffleArray(data.cards);
       }
-      setQuizData(target_cards);
+      setQuizData(
+        target_cards.map((card: Card) => {
+          return {
+            question: card,
+          };
+        })
+      );
       setIsStart(true);
     } catch (error) {
       console.log(error);

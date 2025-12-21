@@ -31,7 +31,6 @@ export const GET = async (req: NextRequest) => {
         allCards.filter((c) => c.uta_num !== quizCard.uta_num),
         3
       );
-
       // 正解と不正解の選択肢を結合し、シャッフルしてランダムな順序にする
       const options = _.shuffle([...incorrectOptions, quizCard]);
 

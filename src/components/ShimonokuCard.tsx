@@ -32,8 +32,6 @@ const ShimonokuCard = ({ card, isVisible, isReverse, isKimariji }: Props) => {
     zIndex: 1,
     fontSize: "18px",
   };
-
-  console.log(isVisible,isKimariji);
   return (
     <div style={CardStyle} className="min-w-full h-full relative">
       <div

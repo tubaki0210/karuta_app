@@ -1,29 +1,30 @@
-import { Card } from "@/type/types";
+import { Card, QuizDataProps } from "@/type/types";
 import React, { useEffect, useMemo, useReducer, useRef, useState } from "react";
 import QuizView from "./QuizView"; // クイズ表示用コンポーネント
 import QuizResult from "./QuizResult"; // 結果表示用コンポーネント
 import "../style/Memorize.css";
+import { quizReducer } from "@/lib/quizReducer";
 
 // --- 型定義 ---
 interface ShimonokuQuizProps {
-  quizData: Card[];
-  setQuizData: (quiz_data: Card[]) => void;
+  quizData: QuizDataProps[];
+  setQuizData: (quiz_data: QuizDataProps[]) => void;
   setIsStart: (isStart: boolean) => void;
 }
 
 interface State {
   currentIndex: number;
   correctCount: number;
-  incorrectCards: Card[];
+  incorrectCards: QuizDataProps[];
   isFinished: boolean;
   isMistaken: boolean; // isMisAns と nextFlag を統合
 }
 
 // --- Reducerで管理するアクションの型 ---
 type Action =
-  | { type: "ANSWER_CORRECT" }
-  | { type: "ANSWER_INCORRECT" }
-  | { type: "NEXT_QUESTION" }
+  | { type: "ANSWER_CORRECT"; payload: { isLast: boolean } }
+  | { type: "ANSWER_INCORRECT"; payload: { currentCard: QuizDataProps } }
+  | { type: "NEXT_QUESTION"; payload: { isLast: boolean } }
   | { type: "RECHALLENGE" };
 
 // --- 初期状態 ---
@@ -35,45 +36,6 @@ const initialState: State = {
   isMistaken: false,
 };
 
-const quizReducer = (state: State, action: Action, quizData: Card[]): State => {
-  const isLastQuestion = state.currentIndex === quizData.length - 1;
-  const currentCard = quizData[state.currentIndex];
-
-  switch (action.type) {
-    case "ANSWER_CORRECT":
-      return {
-        ...state,
-        correctCount: state.correctCount + 1,
-        currentIndex: isLastQuestion
-          ? state.currentIndex
-          : state.currentIndex + 1,
-        isFinished: isLastQuestion,
-      };
-    case "ANSWER_INCORRECT":
-      return {
-        ...state,
-        isMistaken: true,
-        incorrectCards: [...state.incorrectCards, currentCard],
-      };
-    case "NEXT_QUESTION":
-      return {
-        ...state,
-        isMistaken: false,
-        currentIndex: isLastQuestion
-          ? state.currentIndex
-          : state.currentIndex + 1,
-        isFinished: isLastQuestion,
-      };
-    case "RECHALLENGE":
-      return {
-        ...initialState,
-        // incorrectCards はリセットしない
-      };
-    default:
-      throw new Error("Unhandled action type");
-  }
-};
-
 // --- メインコンポーネント ---
 const ShimonokuQuiz = ({
   quizData,
@@ -82,12 +44,11 @@ const ShimonokuQuiz = ({
 }: ShimonokuQuizProps) => {
   // useReducer を使用
   const [state, dispatch] = useReducer(
-    (s: State, a: Action) => quizReducer(s, a, quizData),
+    (s: State, a: Action) => quizReducer(s, a),
     initialState
   );
 
   const inputRef = useRef<HTMLInputElement>(null);
-
   const currentQuiz = quizData[state.currentIndex];
   const [elapsedTime, setElapsedTime] = useState<number[]>([]);
 

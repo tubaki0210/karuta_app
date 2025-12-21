@@ -1,19 +1,20 @@
 import React, { useState, FormEvent, useEffect, useMemo } from "react";
 import ShimonokuCard from "./ShimonokuCard";
-import { Card } from "@/type/types";
+import { Card, QuizDataProps } from "@/type/types";
 
 // propsの型定義をインポートするか、ここで定義
 interface State {
   currentIndex: number;
   isMistaken: boolean;
 }
+
 type Action =
-  | { type: "ANSWER_CORRECT" }
-  | { type: "ANSWER_INCORRECT" }
-  | { type: "NEXT_QUESTION" };
+  | { type: "ANSWER_CORRECT"; payload: { isLast: boolean } }
+  | { type: "ANSWER_INCORRECT"; payload: { currentCard: QuizDataProps } }
+  | { type: "NEXT_QUESTION"; payload: { isLast: boolean } };
 
 interface QuizViewProps {
-  currentCard: Card;
+  currentCard: QuizDataProps;
   state: State;
   dispatch: React.Dispatch<Action>;
   quizLength: number;
@@ -30,13 +31,16 @@ const QuizView = React.forwardRef<HTMLInputElement, QuizViewProps>(
     const startTime = useMemo(() => {
       return Date.now();
     }, [currentCard]);
-
     const handleSubmit = (e: FormEvent) => {
       e.preventDefault();
-      if (currentCard.kimariji_kana === inputValue) {
-        dispatch({ type: "ANSWER_CORRECT" });
+      const isLast = state.currentIndex === quizLength - 1;
+      if (currentCard.question.kimariji_kana === inputValue) {
+        dispatch({ type: "ANSWER_CORRECT", payload: { isLast: isLast } });
       } else {
-        dispatch({ type: "ANSWER_INCORRECT" });
+        dispatch({
+          type: "ANSWER_INCORRECT",
+          payload: { currentCard: currentCard },
+        });
       }
       if (startTime) {
         const endTime = Date.now();
@@ -47,7 +51,8 @@ const QuizView = React.forwardRef<HTMLInputElement, QuizViewProps>(
     };
 
     const handleNext = () => {
-      dispatch({ type: "NEXT_QUESTION" });
+      const isLast = state.currentIndex === quizLength - 1;
+      dispatch({ type: "NEXT_QUESTION", payload: { isLast: isLast } });
       setIsAnswerVisible(false);
     };
 
@@ -68,7 +73,7 @@ const QuizView = React.forwardRef<HTMLInputElement, QuizViewProps>(
             不正解
           </p>
           <ShimonokuCard
-            card={currentCard}
+            card={currentCard.question}
             isVisible={true}
             isReverse={false}
           />
@@ -107,7 +112,7 @@ const QuizView = React.forwardRef<HTMLInputElement, QuizViewProps>(
         {isAnswerVisible && (
           <div className="mt-2 p-3 bg-white rounded-md shadow">
             <p className="font-bold text-lg text-blue-600">
-              {currentCard.kimariji_kana}
+              {currentCard.question.kimariji_kana}
             </p>
           </div>
         )}

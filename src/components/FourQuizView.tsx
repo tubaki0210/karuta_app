@@ -11,9 +11,9 @@ interface State {
   isMistaken: boolean;
 }
 type Action =
-  | { type: "ANSWER_CORRECT" }
-  | { type: "ANSWER_INCORRECT" }
-  | { type: "NEXT_QUESTION" };
+  | { type: "ANSWER_CORRECT"; payload: { isLast: boolean } }
+  | { type: "ANSWER_INCORRECT"; payload: { currentCard: QuizDataProps } }
+  | { type: "NEXT_QUESTION"; payload: { isLast: boolean } };
 
 interface FourQuizViewProps {
   currentQuiz: QuizDataProps;
@@ -39,11 +39,15 @@ const FourQuizView = ({
 
   const handleCheckAnswer = async (selected_card_id: number) => {
     const isCorrected = selected_card_id === currentQuiz.question.id;
+    const isLast = state.currentIndex === quizLength - 1;
     if (isCorrected) {
-      dispatch({ type: "ANSWER_CORRECT" });
+      dispatch({ type: "ANSWER_CORRECT", payload: { isLast: isLast } });
       setSelected(-1);
     } else {
-      dispatch({ type: "ANSWER_INCORRECT" });
+      dispatch({
+        type: "ANSWER_INCORRECT",
+        payload: { currentCard: currentQuiz },
+      });
       setSelected(selected_card_id);
     }
     if (startTime) {
@@ -59,7 +63,8 @@ const FourQuizView = ({
 
   const handleNext = () => {
     setSelected(-1);
-    dispatch({ type: "NEXT_QUESTION" });
+    const isLast = state.currentIndex === quizLength - 1;
+    dispatch({ type: "NEXT_QUESTION", payload: { isLast: isLast } });
   };
 
   return (
@@ -69,7 +74,7 @@ const FourQuizView = ({
           <FlashKaminokuCard card={currentQuiz.question} />
         </div>
         <div className="grid grid-cols-2 gap-5 md:flex md:gap-4">
-          {currentQuiz.options.map((option) => (
+          {currentQuiz.options?.map((option) => (
             <div className="relative" key={option.id}>
               <p
                 className={`absolute duration-400 opacity-0 -top-0 left-1/2 text-2xl z-10 transform -translate-x-1/2

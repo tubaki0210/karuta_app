@@ -1,12 +1,13 @@
 import React, { useEffect, useMemo, useReducer, useState } from "react";
 import QuizResult from "./QuizResult";
 import FourQuizView from "./FourQuizView";
-import { Card } from "@/type/types";
+import { Card, QuizDataProps } from "@/type/types";
+import { quizReducer } from "@/lib/quizReducer";
 
-interface QuizDataProps {
-  question: Card;
-  options: Card[];
-}
+// interface QuizDataProps {
+//   question: Card;
+//   options: Card[];
+// }
 
 interface QuizFieldProps {
   quizData: QuizDataProps[];
@@ -24,9 +25,9 @@ interface State {
 
 // --- Reducerで管理するアクションの型 ---
 type Action =
-  | { type: "ANSWER_CORRECT" }
-  | { type: "ANSWER_INCORRECT" }
-  | { type: "NEXT_QUESTION" }
+  | { type: "ANSWER_CORRECT"; payload : { isLast : boolean } }
+  | { type: "ANSWER_INCORRECT"; payload : { currentCard : QuizDataProps } }
+  | { type: "NEXT_QUESTION"; payload : { isLast : boolean } }
   | { type: "RECHALLENGE" };
 
 // --- 初期状態 ---
@@ -38,53 +39,10 @@ const initialState: State = {
   isMistaken: false,
 };
 
-// --- Reducer関数: 全ての状態遷移ロジックをここに集約 ---
-const quizReducer = (
-  state: State,
-  action: Action,
-  quizData: QuizDataProps[]
-): State => {
-  const isLastQuestion = state.currentIndex === quizData.length - 1;
-  const currentCard = quizData[state.currentIndex];
-  switch (action.type) {
-    case "ANSWER_CORRECT":
-      return {
-        ...state,
-        correctCount: state.correctCount + 1,
-        currentIndex: isLastQuestion
-          ? state.currentIndex
-          : state.currentIndex + 1,
-        isFinished: isLastQuestion,
-      };
-    case "ANSWER_INCORRECT":
-      return {
-        ...state,
-        isMistaken: true,
-        incorrectCards: [...state.incorrectCards, currentCard],
-      };
-    case "NEXT_QUESTION":
-      return {
-        ...state,
-        isMistaken: false,
-        currentIndex: isLastQuestion
-          ? state.currentIndex
-          : state.currentIndex + 1,
-        isFinished: isLastQuestion,
-      };
-    case "RECHALLENGE":
-      return {
-        ...initialState,
-        // incorrectCards はリセットしない
-      };
-    default:
-      throw new Error("Unhandled action type");
-  }
-};
-
 const QuizField = ({ quizData, setQuizData, setIsStart }: QuizFieldProps) => {
   // useReducer を使用
   const [state, dispatch] = useReducer(
-    (s: State, a: Action) => quizReducer(s, a, quizData),
+    (s: State, a: Action) => quizReducer(s, a),
     initialState
   );
   const [elapsedTime, setElapsedTime] = useState<number[]>([]);
