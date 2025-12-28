@@ -1,5 +1,5 @@
 import { Card } from "@/type/types";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CloseIcon from "@mui/icons-material/Close";
@@ -32,10 +32,24 @@ const MemorizeModal = ({
   const { user } = useAuth();
   const [isKimariji, setIsKimariji] = useState(false);
   const [isShimonoku, setIsShimonoku] = useState(true);
+  const modalRef = useRef<HTMLDivElement>(null)
   const isInclude = weakCards.find((c) => c.id === currentCard.id);
+
+  useEffect(() => {
+    const clickOutside = (e : MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+        onClose()
+      }
+    }
+    document.addEventListener('mousedown', clickOutside)
+    return () => {
+      document.removeEventListener('mousedown', clickOutside)
+    }
+  },[])
+
   return (
     <div className="z-50 fixed left-0 top-0 w-full h-screen bg-black/75 flex justify-evenly items-center">
-      <div className="flex flex-col mb:mt-0 px-1">
+      <div className="flex flex-col mb:mt-0 px-1" ref={modalRef}>
         <div className="flex justify-between">
           <button
             className="p-3 md:p-5 bg-green-300 rounded-full hover:bg-green-500 duration-300"
