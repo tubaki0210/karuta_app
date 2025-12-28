@@ -22,7 +22,7 @@ const QuizForm = ({
   children,
 }: Props) => {
   return (
-    <div className="bg-white shadow-2xl p-8 flex flex-col   w-[500px]">
+    <div className="bg-white shadow-2xl p-8 flex flex-col  md:w-[500px]">
       <QuizRange settings={settings} setSettings={setSettings} />
       {/* ランダムにするかどうか */}
       {children}
