@@ -21,7 +21,7 @@ const ListCard = ({ card, handleFocus }: Props) => {
         onClick={() => handleFocus(card.id)}
         className="cursor-pointer w-[140px] h-[200px] bg-amber-500 transition transform hover:scale-105 duration-200"
       >
-        <KaminokuCard card={card} key={card.id} isKimariji={false} />
+        <KaminokuCard card={card} key={card.id} isKimariji={false} isVisible={true} />
       </div>
     </div>
   );

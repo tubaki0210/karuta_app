@@ -5,9 +5,10 @@ import { useFudaBackGround } from "@/context/FudaBackGroundColor";
 interface Props {
   card: Card;
   isKimariji: boolean;
+  isVisible: boolean;
 }
 
-const KaminokuCard = ({ card, isKimariji }: Props) => {
+const KaminokuCard = ({ card, isKimariji, isVisible }: Props) => {
   const [kaminoku, nakanoku, shimonoku] = card.kamino_ku_kana.split(" ");
   const { backGround } = useFudaBackGround();
   const CardStyle: React.CSSProperties = {
@@ -36,7 +37,7 @@ const KaminokuCard = ({ card, isKimariji }: Props) => {
       >
         {card.kimariji_kana}
       </div>
-      <div className="flex flex-col gap-4">
+      <div className={`flex flex-col gap-4 ${!isVisible && "opacity-0"}`}>
         <div>{kaminoku}</div>
         <div>{nakanoku}</div>
         <div>{shimonoku}</div>

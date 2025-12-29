@@ -30,7 +30,8 @@ const MemorizeModal = ({
   handleWeakCard,
 }: MemorizeModalProps) => {
   const { user } = useAuth();
-  const [isKimariji, setIsKimariji] = useState(false);
+  // const [isKimariji, setIsKimariji] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const [isShimonoku, setIsShimonoku] = useState(true);
   const modalRef = useRef<HTMLDivElement>(null)
   const isInclude = weakCards.find((c) => c.id === currentCard.id);
@@ -104,10 +105,10 @@ const MemorizeModal = ({
               className={`flex flex-col md:flex-row-reverse md:gap-20 sm:gap-10 gap-5 fade-in-container`}
             >
               <div
-                onClick={() => setIsKimariji((prev) => !prev)}
+                onClick={() => setIsVisible((prev) => !prev)}
                 className="w-[150px] h-[190px] text-[15px] lg:w-[250px] lg:h-[300px] lg:text-3xl md:w-[200px] md:h-[280px] md:text-3xl transition transform hover:scale-105 duration-300"
               >
-                <KaminokuCard card={currentCard} isKimariji={isKimariji} />
+                <KaminokuCard card={currentCard} isKimariji={false} isVisible={isVisible} />
               </div>
               <div
                 onClick={() => setIsShimonoku((prev) => !prev)}
