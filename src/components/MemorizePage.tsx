@@ -24,6 +24,7 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
   const [currentCardId, setCurrentCardId] = useState(-1);
   const [isFoucs, setIsFocus] = useState(false);
   const [isWeakVisible, setIsWeakVisible] = useState(false);
+  const [isRandom, setIsRandom] = useState(false);
   const { user } = useAuth();
   const [isPending, startTransition] = useTransition();
   const [optimisticWeakCards, setOptimisticWeakCards] = useOptimistic(
@@ -85,8 +86,14 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
   const listDispCards = useMemo(() => {
     return isWeakVisible
       ? [...optimisticWeakCards].sort((a, b) => a.uta_num - b.uta_num)
-      : initCards;
-  }, [optimisticWeakCards, isWeakVisible, initCards]);
+      : (
+        isRandom
+          ? [...initCards].sort(() => Math.random() - 0.5)
+          : initCards
+      );
+  }, [optimisticWeakCards, isWeakVisible, initCards, isRandom]);
+
+
 
   const currentCard =
     currentCardId !== -1 ? listDispCards?.[currentCardId] : null;
@@ -120,6 +127,16 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
             id="weak"
             onChange={() => setIsWeakVisible((prev) => !prev)}
             disabled={!user}
+          />
+        </div>
+        <div>
+          <label htmlFor="random">
+            ランダム表示
+          </label>
+          <input
+            type="checkbox"
+            id="random"
+            onChange={() => setIsRandom((prev) => !prev)}
           />
         </div>
         <div className="mt-7 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-4 pr-4">
