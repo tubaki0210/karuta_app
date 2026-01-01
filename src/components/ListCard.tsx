@@ -6,9 +6,10 @@ import Link from "next/link";
 interface Props {
   card: Card;
   handleFocus: (id: number) => void;
+  index : number;
 }
 
-const ListCard = ({ card, handleFocus }: Props) => {
+const ListCard = ({ card, handleFocus, index }: Props) => {
   return (
     <div className="p-5 flex flex-col items-center gap-1" key={card.id}>
       <Link
@@ -18,7 +19,7 @@ const ListCard = ({ card, handleFocus }: Props) => {
         {card.uta_num}
       </Link>
       <div
-        onClick={() => handleFocus(card.id)}
+        onClick={() => handleFocus(index)}
         className="cursor-pointer w-[140px] h-[200px] bg-amber-500 transition transform hover:scale-105 duration-200"
       >
         <KaminokuCard card={card} key={card.id} isKimariji={false} isVisible={true} />

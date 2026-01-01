@@ -21,6 +21,7 @@ interface MemorizePageProps {
 }
 
 const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
+  const [shuffledCards, setShuffledCards] = useState<Card[]>([]);
   const [currentCardId, setCurrentCardId] = useState(-1);
   const [isFoucs, setIsFocus] = useState(false);
   const [isWeakVisible, setIsWeakVisible] = useState(false);
@@ -39,8 +40,7 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
 
   const handleFocus = (card_id: number) => {
     setIsFocus(true);
-    const index = listDispCards.findIndex((card) => card.id === card_id);
-    setCurrentCardId(index);
+    setCurrentCardId(card_id);
   };
 
   const handleWeakCard = async (card_id: number) => {
@@ -83,17 +83,48 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
     };
   }, [handleKeyDown]);
 
+// ランダム表示の切り替えハンドル
+  const handleRandomChange = useCallback(() => {
+    setIsRandom((prev) => {
+      const nextValue = !prev;
+      // false -> true になった時だけシャッフルを実行して保存する
+      if (nextValue) {
+        const newShuffled = [...initCards].sort(() => Math.random() - 0.5);
+        setShuffledCards(newShuffled);
+      }
+      return nextValue;
+    });
+  }, [initCards]);
+
+  // initCards自体の中身（IDリストなど）が根本的に変わった場合だけ同期したい場合の処理
+  useEffect(() => {
+    if (isRandom) {
+      // サーバーアクションによる再検証でカードの「数」が変わっていないなら更新しない
+      // これにより、参照が変わっただけの再レンダリングではシャッフルが維持される
+      setShuffledCards((current) => {
+        if (current.length === initCards.length) return current; 
+        return [...initCards].sort(() => Math.random() - 0.5);
+      });
+    }
+  }, [initCards, isRandom]);
+
+  // 表示用カードの決定
   const listDispCards = useMemo(() => {
-    return isWeakVisible
-      ? [...optimisticWeakCards].sort((a, b) => a.uta_num - b.uta_num)
-      : (
-        isRandom
-          ? [...initCards].sort(() => Math.random() - 0.5)
-          : initCards
-      );
-  }, [optimisticWeakCards, isWeakVisible, initCards, isRandom]);
+    if (isWeakVisible) {
+      return [...optimisticWeakCards].sort((a, b) => a.uta_num - b.uta_num);
+    }
+    // ランダムONならStateのシャッフル済み配列を、OFFなら生のinitCardsを返す
+    return isRandom ? shuffledCards : initCards;
+  }, [isWeakVisible, optimisticWeakCards, isRandom, shuffledCards, initCards]);
 
 
+  // const listDispCards = useMemo(() => {
+  //   return isWeakVisible
+  //     ? [...optimisticWeakCards].sort((a, b) => a.uta_num - b.uta_num)
+  //     : isRandom
+  //     ? [...initCards].sort(() => Math.random() - 0.5)
+  //     : initCards;
+  // }, [optimisticWeakCards, isWeakVisible, initCards, isRandom]);
 
   const currentCard =
     currentCardId !== -1 ? listDispCards?.[currentCardId] : null;
@@ -130,18 +161,21 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
           />
         </div>
         <div>
-          <label htmlFor="random">
-            ランダム表示
-          </label>
+          <label htmlFor="random">ランダム表示</label>
           <input
             type="checkbox"
             id="random"
-            onChange={() => setIsRandom((prev) => !prev)}
+            onChange={handleRandomChange}
           />
         </div>
         <div className="mt-7 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-4 pr-4">
-          {listDispCards.map((card) => (
-            <ListCard key={card.id} card={card} handleFocus={handleFocus} />
+          {listDispCards.map((card, index) => (
+            <ListCard
+              key={card.id}
+              card={card}
+              handleFocus={handleFocus}
+              index={index}
+            />
           ))}
         </div>
 
