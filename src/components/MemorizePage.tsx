@@ -96,18 +96,6 @@ const Memorizepage = ({ initCards, initWeakCards }: MemorizePageProps) => {
     });
   }, [initCards]);
 
-  // initCards自体の中身（IDリストなど）が根本的に変わった場合だけ同期したい場合の処理
-  useEffect(() => {
-    if (isRandom) {
-      // サーバーアクションによる再検証でカードの「数」が変わっていないなら更新しない
-      // これにより、参照が変わっただけの再レンダリングではシャッフルが維持される
-      setShuffledCards((current) => {
-        if (current.length === initCards.length) return current; 
-        return [...initCards].sort(() => Math.random() - 0.5);
-      });
-    }
-  }, [initCards, isRandom]);
-
   // 表示用カードの決定
   const listDispCards = useMemo(() => {
     if (isWeakVisible) {
